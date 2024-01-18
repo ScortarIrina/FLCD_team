@@ -48,7 +48,7 @@ IDENTIFIER - Pair(first=49, second=0) -> 1
 ) - Pair(first=-1, second=-1) -> 4
 ; - Pair(first=-1, second=-1) -> 4
 } - Pair(first=-1, second=-1) -> 4
-write - Pair(first=-1, second=-1) -> 2
+print - Pair(first=-1, second=-1) -> 2
 ( - Pair(first=-1, second=-1) -> 4
 IDENTIFIER - Pair(first=41, second=0) -> 1
 ) - Pair(first=-1, second=-1) -> 4

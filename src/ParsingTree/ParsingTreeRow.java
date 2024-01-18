@@ -19,7 +19,7 @@ public class ParsingTreeRow {
     @Override
     public String toString(){
 
-        return "\tParsingTree.ParsingTreeRow {" +
+        return "\tParsingTreeRow {" +
                 "\n\t\t\t\tindex = " + index +
                 ", \n\t\t\t\tinfo = " + info +
                 ", \n\t\t\t\tleftChild = " + (leftChild != null ? leftChild.getIndex() : -1) +

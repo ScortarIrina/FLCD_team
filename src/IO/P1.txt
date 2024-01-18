@@ -24,6 +24,6 @@
 	}
 	string text;
 	text = "Maximum is ";
-	write ( text );
-	write ( maxim );
+	print ( text );
+	print ( maxim );
 }

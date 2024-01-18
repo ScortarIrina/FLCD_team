@@ -12,5 +12,5 @@
         b = c;
     }
 
-    write ( a );
+    print ( a );
 }

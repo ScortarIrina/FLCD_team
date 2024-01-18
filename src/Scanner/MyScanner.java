@@ -25,7 +25,7 @@ public class MyScanner {
     );
 
     private final ArrayList<String> keywords = new ArrayList<>(
-            List.of("mul", "div", "mod", "add", "sub", "read", "write", "if", "else", "for", "while", "int",
+            List.of("mul", "div", "mod", "add", "sub", "read", "print", "if", "else", "for", "while", "int",
                     "string", "char", "return", "start", "array")
     );
 
@@ -129,12 +129,10 @@ public class MyScanner {
         for (String t : tokensToBe) {
             switch (t) {
                 case "\"":
+                    createdString.append(t);
                     if (isStringConstant) {
-                        createdString.append(t);
                         resultedTokens.add(new Pair<>(createdString.toString(), new Pair<>(numberLine, numberColumn)));
                         createdString = new StringBuilder();
-                    } else {
-                        createdString.append(t);
                     }
                     isStringConstant = !isStringConstant;
                     break;
@@ -168,7 +166,7 @@ public class MyScanner {
     }
 
     /**
-     * In this method, we scan the list of created tokens and we classify each of them in a category:
+     * In this method, we scan the list of created tokens, and we classify each of them in a category:
      * - 0 for constants
      * - 1 for identifiers
      * - 2 keywords

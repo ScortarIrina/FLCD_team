@@ -12,5 +12,5 @@
         n = sub ( n , 1 );
 }
 
-write ( sum );
+print ( sum );
 }

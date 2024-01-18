@@ -1,27 +1,27 @@
-program statementList compound_statement mod_expression statement simple_statement structure_statement declaration primitive_declaration array_declaration simple_type assignment_statement if_statement while_statement read_statement write_statement term relation condition add_expression subtract_expression multiply_expression divide_expression ar_expression
-start ; { } + - * / ) ( read write IDENTIFIER CONST add sub mul mod div array [ ] = if else while int string char < <= == != => > ,
+program statementList compoundStmt modExpr statement simpleStmt structureStmt declaration primitiveDecl arrayDecl simpleType assignmentStmt ifStmt whileStmt readStmt printStmt term relation condition addExpr subtractExpr multiplyExpr divideExpr arExpr
+; { } + - * / ) ( read print IDENTIFIER CONST add sub mul mod div array [ ] = if else while int string char < <= == != => > ,
 program
-program ::= compound_statement
+program ::= compoundStmt
 statementList ::= statement|statementList statement
-compound_statement ::= { statementList }
-statement ::= simple_statement ;|structure_statement
-simple_statement ::= declaration|assignment_statement|read_statement|write_statement
-structure_statement ::= compound_statement|if_statement|while_statement
-declaration ::= primitive_declaration|array_declaration
-primitive_declaration ::= simple_type IDENTIFIER
-array_declaration ::= array simple_type IDENTIFIER [ ]
-simple_type ::= int|string|char
-assignment_statement ::= IDENTIFIER = ar_expression
-if_statement ::= if ( condition ) { statement } else { statement }
-while_statement ::= while ( condition ) compound_statement
-read_statement ::= read ( IDENTIFIER )
-write_statement ::= write ( IDENTIFIER )|write ( CONST )
+compoundStmt ::= { statementList }
+statement ::= simpleStmt ;|structureStmt
+simpleStmt ::= declaration|assignmentStmt|readStmt|printStmt
+structureStmt ::= compoundStmt|ifStmt|whileStmt
+declaration ::= primitiveDecl|arrayDecl
+primitiveDecl ::= simpleType IDENTIFIER
+arrayDecl ::= array simpleType IDENTIFIER [ ]
+simpleType ::= int|string|char
+assignmentStmt ::= IDENTIFIER = arExpr
+ifStmt ::= if ( condition ) { statement } else { statement }
+whileStmt ::= while ( condition ) compoundStmt
+readStmt ::= read ( IDENTIFIER )
+printStmt ::= print ( IDENTIFIER )|print ( CONST )
 term ::= IDENTIFIER|CONST
 relation ::= <|<=|==|!=|=>|>
-condition ::= ar_expression relation ar_expression
-add_expression ::= add ( ar_expression , ar_expression )
-subtract_expression ::= sub ( ar_expression , ar_expression )
-multiply_expression ::= mul ( ar_expression , ar_expression )
-divide_expression ::= div ( ar_expression , ar_expression )
-mod_expression ::= mod ( ar_expression , ar_expression )
-ar_expression ::= add_expression|subtract_expression|multiply_expression|divide_expression|mod_expression|term
+condition ::= arExpr relation arExpr
+addExpr ::= add ( arExpr , arExpr )
+subtractExpr ::= sub ( arExpr , arExpr )
+multiplyExpr ::= mul ( arExpr , arExpr )
+divideExpr ::= div ( arExpr , arExpr )
+modExpr ::= mod ( arExpr , arExpr )
+arExpr ::= addExpr|subtractExpr|multiplyExpr|divideExpr|modExpr|term

@@ -2,80 +2,80 @@
 The sequence is ACCEPTED
 
 Production strings:
-	program -> [compound_statement]
-	compound_statement -> [{, statementList, }]
+	program -> [compoundStmt]
+	compoundStmt -> [{, statementList, }]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [write_statement]
-	write_statement -> [write, (, IDENTIFIER, )]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [printStmt]
+	printStmt -> [print, (, IDENTIFIER, )]
 	statementList -> [statementList, statement]
-	statement -> [structure_statement]
-	structure_statement -> [while_statement]
-	while_statement -> [while, (, condition, ), compound_statement]
-	compound_statement -> [{, statementList, }]
+	statement -> [structureStmt]
+	structureStmt -> [whileStmt]
+	whileStmt -> [while, (, condition, ), compoundStmt]
+	compoundStmt -> [{, statementList, }]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [assignment_statement]
-	assignment_statement -> [IDENTIFIER, =, ar_expression]
-	ar_expression -> [subtract_expression]
-	subtract_expression -> [sub, (, ar_expression, ,, ar_expression, )]
-	ar_expression -> [term]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [assignmentStmt]
+	assignmentStmt -> [IDENTIFIER, =, arExpr]
+	arExpr -> [subtractExpr]
+	subtractExpr -> [sub, (, arExpr, ,, arExpr, )]
+	arExpr -> [term]
 	term -> [IDENTIFIER]
-	ar_expression -> [term]
+	arExpr -> [term]
 	term -> [IDENTIFIER]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [assignment_statement]
-	assignment_statement -> [IDENTIFIER, =, ar_expression]
-	ar_expression -> [add_expression]
-	add_expression -> [add, (, ar_expression, ,, ar_expression, )]
-	ar_expression -> [term]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [assignmentStmt]
+	assignmentStmt -> [IDENTIFIER, =, arExpr]
+	arExpr -> [addExpr]
+	addExpr -> [add, (, arExpr, ,, arExpr, )]
+	arExpr -> [term]
 	term -> [IDENTIFIER]
-	ar_expression -> [term]
+	arExpr -> [term]
 	term -> [IDENTIFIER]
 	statementList -> [statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [read_statement]
-	read_statement -> [read, (, IDENTIFIER, )]
-	condition -> [ar_expression, relation, ar_expression]
-	ar_expression -> [term]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [readStmt]
+	readStmt -> [read, (, IDENTIFIER, )]
+	condition -> [arExpr, relation, arExpr]
+	arExpr -> [term]
 	term -> [CONST]
 	relation -> [>]
-	ar_expression -> [term]
+	arExpr -> [term]
 	term -> [IDENTIFIER]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [read_statement]
-	read_statement -> [read, (, IDENTIFIER, )]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [readStmt]
+	readStmt -> [read, (, IDENTIFIER, )]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [assignment_statement]
-	assignment_statement -> [IDENTIFIER, =, ar_expression]
-	ar_expression -> [term]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [assignmentStmt]
+	assignmentStmt -> [IDENTIFIER, =, arExpr]
+	arExpr -> [term]
 	term -> [CONST]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [declaration]
-	declaration -> [primitive_declaration]
-	primitive_declaration -> [simple_type, IDENTIFIER]
-	simple_type -> [int]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [declaration]
+	declaration -> [primitiveDecl]
+	primitiveDecl -> [simpleType, IDENTIFIER]
+	simpleType -> [int]
 	statementList -> [statementList, statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [declaration]
-	declaration -> [primitive_declaration]
-	primitive_declaration -> [simple_type, IDENTIFIER]
-	simple_type -> [int]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [declaration]
+	declaration -> [primitiveDecl]
+	primitiveDecl -> [simpleType, IDENTIFIER]
+	simpleType -> [int]
 	statementList -> [statement]
-	statement -> [simple_statement, ;]
-	simple_statement -> [declaration]
-	declaration -> [primitive_declaration]
-	primitive_declaration -> [simple_type, IDENTIFIER]
-	simple_type -> [int]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [declaration]
+	declaration -> [primitiveDecl]
+	primitiveDecl -> [simpleType, IDENTIFIER]
+	simpleType -> [int]
 
 Productions numbers: [0, 3, 2, 4, 9, 24, 2, 5, 12, 22, 3, 2, 4, 7, 20, 41, 36, 45, 26, 45, 26, 2, 4, 7, 20, 40, 35, 45, 26, 45, 26, 1, 4, 8, 23, 34, 45, 27, 33, 45, 26, 2, 4, 8, 23, 2, 4, 7, 20, 45, 27, 2, 4, 6, 13, 15, 17, 2, 4, 6, 13, 15, 17, 1, 4, 6, 13, 15, 17]
 
 The output tree: 
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 0, 
 				info = program, 
 				leftChild = 1, 
@@ -83,15 +83,15 @@ The output tree:
 				parent = -1, 
 				level = 0
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 1, 
-				info = compound_statement, 
+				info = compoundStmt, 
 				leftChild = 2, 
 				rightChild = -1, 
 				parent = 0, 
 				level = 1
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 2, 
 				info = {, 
 				leftChild = -1, 
@@ -99,7 +99,7 @@ The output tree:
 				parent = 1, 
 				level = 2
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 3, 
 				info = statementList, 
 				leftChild = 4, 
@@ -107,7 +107,7 @@ The output tree:
 				parent = 1, 
 				level = 2
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 124, 
 				info = }, 
 				leftChild = -1, 
@@ -115,7 +115,7 @@ The output tree:
 				parent = 1, 
 				level = 2
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 4, 
 				info = statementList, 
 				leftChild = 5, 
@@ -123,7 +123,7 @@ The output tree:
 				parent = 3, 
 				level = 3
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 12, 
 				info = statement, 
 				leftChild = 13, 
@@ -131,15 +131,15 @@ The output tree:
 				parent = 3, 
 				level = 3
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 5, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 6, 
 				rightChild = 11, 
 				parent = 4, 
 				level = 4
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 11, 
 				info = ;, 
 				leftChild = -1, 
@@ -147,7 +147,7 @@ The output tree:
 				parent = 4, 
 				level = 4
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 13, 
 				info = statementList, 
 				leftChild = 14, 
@@ -155,7 +155,7 @@ The output tree:
 				parent = 12, 
 				level = 4
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 78, 
 				info = statement, 
 				leftChild = 79, 
@@ -163,23 +163,23 @@ The output tree:
 				parent = 12, 
 				level = 4
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 6, 
-				info = write_statement, 
+				info = printStmt, 
 				leftChild = 7, 
 				rightChild = -1, 
 				parent = 5, 
 				level = 5
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 14, 
-				info = structure_statement, 
+				info = structureStmt, 
 				leftChild = 15, 
 				rightChild = -1, 
 				parent = 13, 
 				level = 5
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 79, 
 				info = statementList, 
 				leftChild = 80, 
@@ -187,7 +187,7 @@ The output tree:
 				parent = 78, 
 				level = 5
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 87, 
 				info = statement, 
 				leftChild = 88, 
@@ -195,15 +195,15 @@ The output tree:
 				parent = 78, 
 				level = 5
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 7, 
-				info = write, 
+				info = print, 
 				leftChild = -1, 
 				rightChild = 8, 
 				parent = 6, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 8, 
 				info = (, 
 				leftChild = -1, 
@@ -211,7 +211,7 @@ The output tree:
 				parent = 6, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 9, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -219,7 +219,7 @@ The output tree:
 				parent = 6, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 10, 
 				info = ), 
 				leftChild = -1, 
@@ -227,23 +227,23 @@ The output tree:
 				parent = 6, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 15, 
-				info = while_statement, 
+				info = whileStmt, 
 				leftChild = 16, 
 				rightChild = -1, 
 				parent = 14, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 80, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 81, 
 				rightChild = 86, 
 				parent = 79, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 86, 
 				info = ;, 
 				leftChild = -1, 
@@ -251,7 +251,7 @@ The output tree:
 				parent = 79, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 88, 
 				info = statementList, 
 				leftChild = 89, 
@@ -259,7 +259,7 @@ The output tree:
 				parent = 87, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 97, 
 				info = statement, 
 				leftChild = 98, 
@@ -267,7 +267,7 @@ The output tree:
 				parent = 87, 
 				level = 6
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 16, 
 				info = while, 
 				leftChild = -1, 
@@ -275,7 +275,7 @@ The output tree:
 				parent = 15, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 17, 
 				info = (, 
 				leftChild = -1, 
@@ -283,7 +283,7 @@ The output tree:
 				parent = 15, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 18, 
 				info = condition, 
 				leftChild = 19, 
@@ -291,7 +291,7 @@ The output tree:
 				parent = 15, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 68, 
 				info = ), 
 				leftChild = -1, 
@@ -299,31 +299,31 @@ The output tree:
 				parent = 15, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 69, 
-				info = compound_statement, 
+				info = compoundStmt, 
 				leftChild = 70, 
 				rightChild = -1, 
 				parent = 15, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 81, 
-				info = read_statement, 
+				info = readStmt, 
 				leftChild = 82, 
 				rightChild = -1, 
 				parent = 80, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 89, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 90, 
 				rightChild = 96, 
 				parent = 88, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 96, 
 				info = ;, 
 				leftChild = -1, 
@@ -331,7 +331,7 @@ The output tree:
 				parent = 88, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 98, 
 				info = statementList, 
 				leftChild = 99, 
@@ -339,7 +339,7 @@ The output tree:
 				parent = 97, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 106, 
 				info = statement, 
 				leftChild = 107, 
@@ -347,7 +347,7 @@ The output tree:
 				parent = 97, 
 				level = 7
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 19, 
 				info = {, 
 				leftChild = -1, 
@@ -355,7 +355,7 @@ The output tree:
 				parent = 18, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 20, 
 				info = statementList, 
 				leftChild = 21, 
@@ -363,7 +363,7 @@ The output tree:
 				parent = 18, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 67, 
 				info = }, 
 				leftChild = -1, 
@@ -371,15 +371,15 @@ The output tree:
 				parent = 18, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 70, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 71, 
 				rightChild = 73, 
 				parent = 69, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 73, 
 				info = relation, 
 				leftChild = 74, 
@@ -387,15 +387,15 @@ The output tree:
 				parent = 69, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 75, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 76, 
 				rightChild = -1, 
 				parent = 69, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 82, 
 				info = read, 
 				leftChild = -1, 
@@ -403,7 +403,7 @@ The output tree:
 				parent = 81, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 83, 
 				info = (, 
 				leftChild = -1, 
@@ -411,7 +411,7 @@ The output tree:
 				parent = 81, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 84, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -419,7 +419,7 @@ The output tree:
 				parent = 81, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 85, 
 				info = ), 
 				leftChild = -1, 
@@ -427,23 +427,23 @@ The output tree:
 				parent = 81, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 90, 
-				info = assignment_statement, 
+				info = assignmentStmt, 
 				leftChild = 91, 
 				rightChild = -1, 
 				parent = 89, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 99, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 100, 
 				rightChild = 105, 
 				parent = 98, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 105, 
 				info = ;, 
 				leftChild = -1, 
@@ -451,7 +451,7 @@ The output tree:
 				parent = 98, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 107, 
 				info = statementList, 
 				leftChild = 108, 
@@ -459,7 +459,7 @@ The output tree:
 				parent = 106, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 115, 
 				info = statement, 
 				leftChild = 116, 
@@ -467,7 +467,7 @@ The output tree:
 				parent = 106, 
 				level = 8
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 21, 
 				info = statementList, 
 				leftChild = 22, 
@@ -475,7 +475,7 @@ The output tree:
 				parent = 20, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 39, 
 				info = statement, 
 				leftChild = 40, 
@@ -483,7 +483,7 @@ The output tree:
 				parent = 20, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 71, 
 				info = term, 
 				leftChild = 72, 
@@ -491,7 +491,7 @@ The output tree:
 				parent = 70, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 74, 
 				info = >, 
 				leftChild = -1, 
@@ -499,7 +499,7 @@ The output tree:
 				parent = 73, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 76, 
 				info = term, 
 				leftChild = 77, 
@@ -507,7 +507,7 @@ The output tree:
 				parent = 75, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 91, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -515,7 +515,7 @@ The output tree:
 				parent = 90, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 92, 
 				info = =, 
 				leftChild = -1, 
@@ -523,15 +523,15 @@ The output tree:
 				parent = 90, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 93, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 94, 
 				rightChild = -1, 
 				parent = 90, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 100, 
 				info = declaration, 
 				leftChild = 101, 
@@ -539,15 +539,15 @@ The output tree:
 				parent = 99, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 108, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 109, 
 				rightChild = 114, 
 				parent = 107, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 114, 
 				info = ;, 
 				leftChild = -1, 
@@ -555,7 +555,7 @@ The output tree:
 				parent = 107, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 116, 
 				info = statement, 
 				leftChild = 117, 
@@ -563,15 +563,15 @@ The output tree:
 				parent = 115, 
 				level = 9
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 22, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 23, 
 				rightChild = 38, 
 				parent = 21, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 38, 
 				info = ;, 
 				leftChild = -1, 
@@ -579,7 +579,7 @@ The output tree:
 				parent = 21, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 40, 
 				info = statementList, 
 				leftChild = 41, 
@@ -587,7 +587,7 @@ The output tree:
 				parent = 39, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 58, 
 				info = statement, 
 				leftChild = 59, 
@@ -595,7 +595,7 @@ The output tree:
 				parent = 39, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 72, 
 				info = CONST, 
 				leftChild = -1, 
@@ -603,7 +603,7 @@ The output tree:
 				parent = 71, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 77, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -611,7 +611,7 @@ The output tree:
 				parent = 76, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 94, 
 				info = term, 
 				leftChild = 95, 
@@ -619,15 +619,15 @@ The output tree:
 				parent = 93, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 101, 
-				info = primitive_declaration, 
+				info = primitiveDecl, 
 				leftChild = 102, 
 				rightChild = -1, 
 				parent = 100, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 109, 
 				info = declaration, 
 				leftChild = 110, 
@@ -635,15 +635,15 @@ The output tree:
 				parent = 108, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 117, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 118, 
 				rightChild = 123, 
 				parent = 116, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 123, 
 				info = ;, 
 				leftChild = -1, 
@@ -651,23 +651,23 @@ The output tree:
 				parent = 116, 
 				level = 10
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 23, 
-				info = assignment_statement, 
+				info = assignmentStmt, 
 				leftChild = 24, 
 				rightChild = -1, 
 				parent = 22, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 41, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 42, 
 				rightChild = 57, 
 				parent = 40, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 57, 
 				info = ;, 
 				leftChild = -1, 
@@ -675,7 +675,7 @@ The output tree:
 				parent = 40, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 59, 
 				info = statement, 
 				leftChild = 60, 
@@ -683,7 +683,7 @@ The output tree:
 				parent = 58, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 95, 
 				info = CONST, 
 				leftChild = -1, 
@@ -691,15 +691,15 @@ The output tree:
 				parent = 94, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 102, 
-				info = simple_type, 
+				info = simpleType, 
 				leftChild = 103, 
 				rightChild = 104, 
 				parent = 101, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 104, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -707,15 +707,15 @@ The output tree:
 				parent = 101, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 110, 
-				info = primitive_declaration, 
+				info = primitiveDecl, 
 				leftChild = 111, 
 				rightChild = -1, 
 				parent = 109, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 118, 
 				info = declaration, 
 				leftChild = 119, 
@@ -723,7 +723,7 @@ The output tree:
 				parent = 117, 
 				level = 11
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 24, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -731,7 +731,7 @@ The output tree:
 				parent = 23, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 25, 
 				info = =, 
 				leftChild = -1, 
@@ -739,31 +739,31 @@ The output tree:
 				parent = 23, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 26, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 27, 
 				rightChild = -1, 
 				parent = 23, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 42, 
-				info = assignment_statement, 
+				info = assignmentStmt, 
 				leftChild = 43, 
 				rightChild = -1, 
 				parent = 41, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 60, 
-				info = simple_statement, 
+				info = simpleStmt, 
 				leftChild = 61, 
 				rightChild = 66, 
 				parent = 59, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 66, 
 				info = ;, 
 				leftChild = -1, 
@@ -771,7 +771,7 @@ The output tree:
 				parent = 59, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 103, 
 				info = int, 
 				leftChild = -1, 
@@ -779,15 +779,15 @@ The output tree:
 				parent = 102, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 111, 
-				info = simple_type, 
+				info = simpleType, 
 				leftChild = 112, 
 				rightChild = 113, 
 				parent = 110, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 113, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -795,23 +795,23 @@ The output tree:
 				parent = 110, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 119, 
-				info = primitive_declaration, 
+				info = primitiveDecl, 
 				leftChild = 120, 
 				rightChild = -1, 
 				parent = 118, 
 				level = 12
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 27, 
-				info = subtract_expression, 
+				info = subtractExpr, 
 				leftChild = 28, 
 				rightChild = -1, 
 				parent = 26, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 43, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -819,7 +819,7 @@ The output tree:
 				parent = 42, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 44, 
 				info = =, 
 				leftChild = -1, 
@@ -827,23 +827,23 @@ The output tree:
 				parent = 42, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 45, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 46, 
 				rightChild = -1, 
 				parent = 42, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 61, 
-				info = read_statement, 
+				info = readStmt, 
 				leftChild = 62, 
 				rightChild = -1, 
 				parent = 60, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 112, 
 				info = int, 
 				leftChild = -1, 
@@ -851,15 +851,15 @@ The output tree:
 				parent = 111, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 120, 
-				info = simple_type, 
+				info = simpleType, 
 				leftChild = 121, 
 				rightChild = 122, 
 				parent = 119, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 122, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -867,7 +867,7 @@ The output tree:
 				parent = 119, 
 				level = 13
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 28, 
 				info = sub, 
 				leftChild = -1, 
@@ -875,7 +875,7 @@ The output tree:
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 29, 
 				info = (, 
 				leftChild = -1, 
@@ -883,15 +883,15 @@ The output tree:
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 30, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 31, 
 				rightChild = 33, 
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 33, 
 				info = ,, 
 				leftChild = -1, 
@@ -899,15 +899,15 @@ The output tree:
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 34, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 35, 
 				rightChild = 37, 
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 37, 
 				info = ), 
 				leftChild = -1, 
@@ -915,15 +915,15 @@ The output tree:
 				parent = 27, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 46, 
-				info = add_expression, 
+				info = addExpr, 
 				leftChild = 47, 
 				rightChild = -1, 
 				parent = 45, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 62, 
 				info = read, 
 				leftChild = -1, 
@@ -931,7 +931,7 @@ The output tree:
 				parent = 61, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 63, 
 				info = (, 
 				leftChild = -1, 
@@ -939,7 +939,7 @@ The output tree:
 				parent = 61, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 64, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -947,7 +947,7 @@ The output tree:
 				parent = 61, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 65, 
 				info = ), 
 				leftChild = -1, 
@@ -955,7 +955,7 @@ The output tree:
 				parent = 61, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 121, 
 				info = int, 
 				leftChild = -1, 
@@ -963,7 +963,7 @@ The output tree:
 				parent = 120, 
 				level = 14
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 31, 
 				info = term, 
 				leftChild = 32, 
@@ -971,7 +971,7 @@ The output tree:
 				parent = 30, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 35, 
 				info = term, 
 				leftChild = 36, 
@@ -979,7 +979,7 @@ The output tree:
 				parent = 34, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 47, 
 				info = add, 
 				leftChild = -1, 
@@ -987,7 +987,7 @@ The output tree:
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 48, 
 				info = (, 
 				leftChild = -1, 
@@ -995,15 +995,15 @@ The output tree:
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 49, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 50, 
 				rightChild = 52, 
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 52, 
 				info = ,, 
 				leftChild = -1, 
@@ -1011,15 +1011,15 @@ The output tree:
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 53, 
-				info = ar_expression, 
+				info = arExpr, 
 				leftChild = 54, 
 				rightChild = 56, 
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 56, 
 				info = ), 
 				leftChild = -1, 
@@ -1027,7 +1027,7 @@ The output tree:
 				parent = 46, 
 				level = 15
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 32, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -1035,7 +1035,7 @@ The output tree:
 				parent = 31, 
 				level = 16
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 36, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -1043,7 +1043,7 @@ The output tree:
 				parent = 35, 
 				level = 16
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 50, 
 				info = term, 
 				leftChild = 51, 
@@ -1051,7 +1051,7 @@ The output tree:
 				parent = 49, 
 				level = 16
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 54, 
 				info = term, 
 				leftChild = 55, 
@@ -1059,7 +1059,7 @@ The output tree:
 				parent = 53, 
 				level = 16
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 51, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
@@ -1067,7 +1067,7 @@ The output tree:
 				parent = 50, 
 				level = 17
 		}
-	ParsingTree.ParsingTreeRow {
+	ParsingTreeRow {
 				index = 55, 
 				info = IDENTIFIER, 
 				leftChild = -1, 

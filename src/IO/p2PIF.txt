@@ -43,7 +43,7 @@ IDENTIFIER - Pair(first=98, second=0) -> 1
 IDENTIFIER - Pair(first=99, second=0) -> 1
 ; - Pair(first=-1, second=-1) -> 4
 } - Pair(first=-1, second=-1) -> 4
-write - Pair(first=-1, second=-1) -> 2
+print - Pair(first=-1, second=-1) -> 2
 ( - Pair(first=-1, second=-1) -> 4
 IDENTIFIER - Pair(first=97, second=0) -> 1
 ) - Pair(first=-1, second=-1) -> 4
