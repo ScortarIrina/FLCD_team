@@ -5,23 +5,20 @@ import ParsingTable.RowTable;
 import ParsingTree.OutputTree;
 import State.*;
 import Utils.Pair;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class LR {
-
-    @Getter
+@Data
+public class LR0 {
     private final Grammar grammar;
-
-    @Getter
     private final Grammar workingGrammar;
     private List<Pair<String, List<String>>> orderedProductions;
 
-    public LR(Grammar grammar) throws Exception {
+    public LR0(Grammar grammar) throws Exception {
         this.grammar = grammar;
 
         if (this.grammar.getIsEnriched()) {
@@ -84,7 +81,7 @@ public class LR {
     }
 
     /**
-     * With this method, in state S, we search LR0.LR(0) item that has dot in front of symbol X.
+     * With this method, in state S, we search LR0.LR0(0) item that has dot in front of symbol X.
      * Move the dot after symbol X and call closure for this new item.
      *
      * @param state - the state S from which we want to move

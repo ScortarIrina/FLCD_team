@@ -1,7 +1,7 @@
 package Tests;
 
 import LR0.Grammar;
-import LR0.LR;
+import LR0.LR0;
 import State.State;
 import State.Item;
 
@@ -11,12 +11,12 @@ import java.util.Objects;
 public class Tests {
 
     private Grammar grammar1;
-    private LR lrAlg;
+    private LR0 lrAlg;
 
     public Tests() {
         grammar1 = new Grammar("src/IO/GTest.txt");
         try {
-            lrAlg = new LR(grammar1);
+            lrAlg = new LR0(grammar1);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -35,7 +35,7 @@ public class Tests {
 
     public void runClosureTest2() throws Exception {
         grammar1 = new Grammar("src/IO/GTest2.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         Object[] result = lrAlg.closure(new Item(
                 lrAlg.getWorkingGrammar().getStartingSymbol(),
@@ -48,7 +48,7 @@ public class Tests {
 
     public void runClosureTest3() throws Exception {
         grammar1 = new Grammar("src/IO/GTest3.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         Object[] result = lrAlg.closure(new Item(
                 lrAlg.getWorkingGrammar().getStartingSymbol(),
@@ -67,7 +67,7 @@ public class Tests {
 
     public void runGoToTest1() throws Exception {
         grammar1 = new Grammar("src/IO/GTest.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         State state = lrAlg.closure(new Item(
                 lrAlg.getWorkingGrammar().getStartingSymbol(),
@@ -81,7 +81,7 @@ public class Tests {
 
     public void runGoToTest2() throws Exception {
         grammar1 = new Grammar("src/IO/GTest2.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         State state = lrAlg.closure(new Item(
                 lrAlg.getWorkingGrammar().getStartingSymbol(),
@@ -105,7 +105,7 @@ public class Tests {
 
     public void runGetCanonicalCollectionTest1() throws Exception {
         grammar1 = new Grammar("src/IO/GTest.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         List<State> result = lrAlg.canonicalCollection().getStates();
         assert result.size() == 6;
         assert Objects.equals(result.get(result.size() - 1).getItems().toArray()[0], new Item("A", List.of("a", "b"), 2));
@@ -114,7 +114,7 @@ public class Tests {
 
     public void runGetCanonicalCollectionTest2() throws Exception {
         grammar1 = new Grammar("src/IO/GTest3.txt");
-        lrAlg = new LR(grammar1);
+        lrAlg = new LR0(grammar1);
         List<State> result = lrAlg.canonicalCollection().getStates();
         assert result.size() == 1;
         assert Objects.equals(result.get(0).getItems().toArray()[0], new Item("A", List.of("a"), 1));

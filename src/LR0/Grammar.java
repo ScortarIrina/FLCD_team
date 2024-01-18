@@ -115,7 +115,7 @@ public class Grammar {
     }
 
     /**
-     * With this method we prepare the grammar for the LR0.LR(0) algorithm by adding another starting state S0
+     * With this method we prepare the grammar for the LR0.LR0(0) algorithm by adding another starting state S0
      * which has the production S0 -> currentStartingSymbol, if it is already enriched, we just throw an error
      *
      * @return the enriched grammar

@@ -1,6 +1,6 @@
 import LR0.CanonicalCollection;
 import LR0.Grammar;
-import LR0.LR;
+import LR0.LR0;
 import ParsingTable.ParsingTable;
 import Tests.Tests;
 import Utils.Pair;
@@ -85,7 +85,7 @@ public class Main {
                 emptyFile("src/IO/Out1.txt");
 
                 Grammar grammar1 = new Grammar("src/IO/G1.txt");
-                LR lrAlg = new LR(grammar1);
+                LR0 lrAlg = new LR0(grammar1);
 
                 CanonicalCollection canonicalCollection = lrAlg.canonicalCollection();
 
@@ -121,7 +121,7 @@ public class Main {
 
             } else if (option == 8) {
                 Grammar grammar2 = new Grammar("src/IO/G2.txt");
-                LR lrAlg2 = new LR(grammar2);
+                LR0 lrAlg2 = new LR0(grammar2);
 
                 CanonicalCollection canonicalCollection2 = lrAlg2.canonicalCollection();
 
