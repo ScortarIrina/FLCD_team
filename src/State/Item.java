@@ -1,5 +1,8 @@
 package State;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,55 +14,34 @@ import java.util.Objects;
  * We have a string for the left hand side, a list of strings for the right hand side
  * and the position for the dot
  */
-
+@Data
+@AllArgsConstructor
 public class Item {
-
-    private String leftHandSide;
-    private List<String> rightHandSide;
-    private Integer positionForDot;
-
-    public String getLeftHandSide(){
-        return this.leftHandSide;
-    }
-
-    public Item(String leftHandSide, List<String> rightHandSide, Integer positionForDot){
-        this.leftHandSide = leftHandSide;
-        this.rightHandSide = rightHandSide;
-        this.positionForDot = positionForDot;
-    }
-    public List<String> getRightHandSide(){
-        return this.rightHandSide;
-    }
-
-    public Integer getPositionForDot(){
-        return this.positionForDot;
-    }
+    private String lhs;
+    private List<String> rhs;
+    private Integer dotLocation;
 
     public boolean dotIsLast(){
-        return this.positionForDot == this.rightHandSide.size();
-    }
-
-    @Override
-    public String toString(){
-        List<String> rightHandSide1 = this.rightHandSide.subList(0, positionForDot);
-
-        String stringRightHandSide1 = String.join("", rightHandSide1);
-
-        List<String> rightHandSide2 = this.rightHandSide.subList(positionForDot, this.rightHandSide.size());
-
-        String stringLeftHandSide2 = String.join("", rightHandSide2);
-
-        return leftHandSide.toString() + "->" + stringRightHandSide1 + "." + stringLeftHandSide2;
+        return this.dotLocation == this.rhs.size();
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(leftHandSide, rightHandSide, positionForDot);
+        return Objects.hash(lhs, rhs, dotLocation);
     }
 
     @Override
     public boolean equals(Object item) {
-        return item instanceof Item && Objects.equals(((Item)item).leftHandSide, this.leftHandSide) && ((Item)item).rightHandSide == rightHandSide && Objects.equals(((Item)item).positionForDot, this.positionForDot);
+        return item instanceof Item && Objects.equals(((Item)item).lhs, this.lhs) && ((Item)item).rhs == rhs
+                && Objects.equals(((Item)item).dotLocation, this.dotLocation);
     }
 
+    @Override
+    public String toString(){
+        List<String> rhs1 = this.rhs.subList(0, dotLocation);
+        String rhs1_str = String.join("", rhs1);
+        List<String> rhs2 = this.rhs.subList(dotLocation, this.rhs.size());
+        String lhs1_str = String.join("", rhs2);
+        return lhs + " -> " + rhs1_str + "." + lhs1_str;
+    }
 }

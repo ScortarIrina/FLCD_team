@@ -1,14 +1,12 @@
 package State;
 
 import LR0.Grammar;
+import lombok.Data;
 
 import java.util.*;
 
-/**
- * The state is composed of a set of items (items being of the form [A->alpha.beta]
- */
+@Data
 public class State {
-
     private ActionTypeEnum stateActionType;
     private final Set<Item> items;
 
@@ -17,46 +15,35 @@ public class State {
         this.setActionForState();
     }
 
-    public Set<Item> getItems(){
-        return items;
-    }
-
-    /**
-     * With this method we get the action type for a state
-     * @return - the action type for the state
-     */
-    public ActionTypeEnum getStateActionType(){
-        return this.stateActionType;
-    }
-
     /**
      * With this method we get the symbols which come after the dot
+     *
      * @return a list with the corresponding symbols
      */
-    public List<String> getSymbolsSucceedingTheDot(){
+    public List<String> getPartAfterDot(){
         Set<String> symbols = new LinkedHashSet<>();
 
         for(Item i: items){
-            if(i.getPositionForDot() < i.getRightHandSide().size())
-                symbols.add(i.getRightHandSide().get(i.getPositionForDot()));
+            if(i.getDotLocation() < i.getRhs().size())
+                symbols.add(i.getRhs().get(i.getDotLocation()));
         }
 
         return new ArrayList<>(symbols);
     }
 
     /**
-     * With this method we set the action for the state.
-     * The action can be: SHIFT, REDUCE, ACCEPT, REDUCE_REDUCE_CONFLICT or SHIFT_REDUCE_CONFLICT
+     * This method sets the action for the state (SHIFT, REDUCE, ACCEPT, REDUCE_REDUCE_CONFLICT, SHIFT_REDUCE_CONFLICT)
      */
     public void setActionForState(){
-        if(items.size() == 1 && ((Item)items.toArray()[0]).getRightHandSide().size() == ((Item)items.toArray()[0]).getPositionForDot() && ((Item)this.items.toArray()[0]).getLeftHandSide() == Grammar.firstState){
+        if(items.size() == 1 && ((Item)items.toArray()[0]).getRhs().size() == ((Item)items.toArray()[0]).getDotLocation()
+                && Objects.equals(((Item) this.items.toArray()[0]).getLhs(), Grammar.firstState)){
             this.stateActionType = ActionTypeEnum.ACCEPT;
-        } else if(items.size() == 1 && ((Item) items.toArray()[0]).getRightHandSide().size() == ((Item) items.toArray()[0]).getPositionForDot())
+        } else if(items.size() == 1 && ((Item) items.toArray()[0]).getRhs().size() == ((Item) items.toArray()[0]).getDotLocation())
         {
             this.stateActionType = ActionTypeEnum.REDUCE;
-        } else if(items.size() >= 1 && this.items.stream().allMatch(i -> i.getRightHandSide().size() > i.getPositionForDot())){
+        } else if(!items.isEmpty() && this.items.stream().allMatch(i -> i.getRhs().size() > i.getDotLocation())){
             this.stateActionType = ActionTypeEnum.SHIFT;
-        } else if(items.size() > 1 && this.items.stream().allMatch(i -> i.getRightHandSide().size() == i.getPositionForDot())){
+        } else if(items.size() > 1 && this.items.stream().allMatch(i -> i.getRhs().size() == i.getDotLocation())){
             this.stateActionType = ActionTypeEnum.REDUCE_REDUCE_CONFLICT;
         } else {
             this.stateActionType = ActionTypeEnum.SHIFT_REDUCE_CONFLICT;

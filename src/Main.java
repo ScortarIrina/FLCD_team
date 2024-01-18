@@ -25,15 +25,15 @@ public class Main {
     public static void printMenu() {
         System.out.println("\n\n~~~~~~~~~~~~~~~~ MENU ~~~~~~~~~~~~~~~\n");
         System.out.println("0. Exit");
-        System.out.println("1. To print non-terminals, press 1.");
-        System.out.println("2. To print terminals, press 2.");
-        System.out.println("3. To print the starting symbol, press 3.");
-        System.out.println("4. To print all productions, press 4.");
-        System.out.println("5. To print all productions for a non-terminal, press 5.");
-        System.out.println("6. To check if the grammar is a context-free grammar (CFG), press 6.");
-        System.out.println("7. To run LR0 for G1.txt and parse sequence.txt, press 7.");
-        System.out.println("8. To run LR0 for G2.txt, press 8.");
-        System.out.println("9. To run all tests for the grammar and LR0, press 9.");
+        System.out.println("1. Non-terminals");
+        System.out.println("2. Terminals");
+        System.out.println("3. Starting symbol");
+        System.out.println("4. All productions");
+        System.out.println("5. All productions for a non-terminal");
+        System.out.println("6. Check if it is a CFG");
+        System.out.println("7. LR0 for G1.txt and parse sequence.txt");
+        System.out.println("8. LR0 for G2.txt");
+        System.out.println("9. Run tests for the grammar and LR0");
     }
 
     public static void printMenuParser() {
@@ -75,10 +75,10 @@ public class Main {
             printMenu();
             Scanner keyboard = new Scanner(System.in);
             System.out.print("\nChoose an option (0-9): ");
-            String optionstr = keyboard.next();
+            String optionStr = keyboard.next();
             int option = 0;
-            if (isInteger(optionstr)) {
-                option = Integer.parseInt(optionstr);
+            if (isInteger(optionStr)) {
+                option = Integer.parseInt(optionStr);
 
                 if (option == 0) {
                     isMenuRunning = false;

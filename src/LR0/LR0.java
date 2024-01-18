@@ -38,7 +38,7 @@ public class LR0 {
      */
     public String getNonTerminalBeforeDot(Item item) {
         try {
-            String term = item.getRightHandSide().get(item.getPositionForDot());
+            String term = item.getRhs().get(item.getDotLocation());
             if (!grammar.getNonTerminals().contains(term)) {
                 return null;
             }
@@ -94,12 +94,12 @@ public class LR0 {
         for (Item i : state.getItems()) {
             try {
                 // Get the symbol after the dot in the current LR0 item
-                String nonTerminal = i.getRightHandSide().get(i.getPositionForDot());
+                String nonTerminal = i.getRhs().get(i.getDotLocation());
 
                 // Check if the symbol after the dot matches the symbol we are looking for
                 // Move the dot after the symbol and call closure for the new item
                 if (Objects.equals(nonTerminal, elem)) {
-                    Item nextItem = new Item(i.getLeftHandSide(), i.getRightHandSide(), i.getPositionForDot() + 1);
+                    Item nextItem = new Item(i.getLhs(), i.getRhs(), i.getDotLocation() + 1);
                     State newState = closure(nextItem);
 
                     // Add the items of the new state to the result
@@ -120,7 +120,7 @@ public class LR0 {
     public CanonicalCollection getCanonicalCollectionForGrammar() {
         CanonicalCollection canonicalCollection = new CanonicalCollection();
 
-        // add the closure of the initial item to the collection
+        // addToST the closure of the initial item to the collection
         canonicalCollection.addState(
                 closure(
                         new Item(
@@ -134,7 +134,7 @@ public class LR0 {
         // go through each state from the collection and compute the closure for each symbol
         int index = 0;
         while (index < canonicalCollection.getStates().size()) {
-            for (String symbol : canonicalCollection.getStates().get(index).getSymbolsSucceedingTheDot()) {
+            for (String symbol : canonicalCollection.getStates().get(index).getPartAfterDot()) {
                 State newState = goTo(canonicalCollection.getStates().get(index), symbol);
                 if (!newState.getItems().isEmpty()) {
                     int indexState = canonicalCollection.getStates().indexOf(newState);
@@ -174,7 +174,7 @@ public class LR0 {
             // We set the action of the state (SHIFT/REDUCE/ACCEPT)
             row.action = state.getStateActionType();
 
-            // We initialize the shifts list, in case there will be the case to add them.
+            // We initialize the shifts list, in case there will be the case to addToST them.
             row.shifts = new ArrayList<>();
 
             // If we have any of the two conflicts, we display the state and the symbol and stop the algorithm
@@ -209,8 +209,8 @@ public class LR0 {
                 Item item = state.getItems().stream().filter(Item::dotIsLast).findAny().orElse(null);
                 if (item != null) {
                     row.shifts = null;
-                    row.reduceNonTerminal = item.getLeftHandSide();
-                    row.reduceContent = item.getRightHandSide();
+                    row.reduceNonTerminal = item.getLhs();
+                    row.reduceContent = item.getRhs();
                 } else {
                     throw new Exception("");
                 }
@@ -221,7 +221,7 @@ public class LR0 {
                 row.reduceNonTerminal = null;
                 row.shifts = null;
                 // If the action is SHIFT, we need to look for all the new states that are created from the initial
-                // state and add them to the shifts list
+                // state and addToST them to the shifts list
             } else if (state.getStateActionType() == ActionTypeEnum.SHIFT) {
 
                 List<Pair<String, Integer>> goTos = new ArrayList<>();
