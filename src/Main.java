@@ -76,7 +76,7 @@ public class Main {
             Scanner keyboard = new Scanner(System.in);
             System.out.print("\nChoose an option (0-9): ");
             String optionStr = keyboard.next();
-            int option = 0;
+            int option;
             if (isInteger(optionStr)) {
                 option = Integer.parseInt(optionStr);
 
@@ -234,7 +234,7 @@ public class Main {
                 Arrays.stream(new StringBuilder(line).reverse().toString().split("")).forEach(wordStack::push);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error reading the sequence", e);
         }
         return wordStack;
     }

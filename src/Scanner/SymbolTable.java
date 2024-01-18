@@ -8,20 +8,20 @@ public class SymbolTable {
     private Integer size;
     private HashTable hashTable;
 
-    public SymbolTable(Integer size){
+    public SymbolTable(Integer size) {
         hashTable = new HashTable(size);
     }
 
-    public Pair findPositionOfTerm(String term){
+    public Pair findPositionOfTerm(String term) {
         return hashTable.findPositionOfTerm(term);
     }
 
-    public boolean addToST(String term){
-        return hashTable.add(term);
+    public void addToST(String term) {
+        hashTable.add(term);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.hashTable.toString();
     }
 }

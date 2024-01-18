@@ -103,7 +103,7 @@ public class OutputTree {
             // We take the production string corresponding to the index
             Pair<String, List<String>> productionString = this.grammar.getOrderedProductions().get(productionIndex);
 
-            // We create a ew note in our tree with the current symbol
+            // We create a new note in our tree with the current symbol
             ParsingTreeRow node = new ParsingTreeRow(currentSymbol);
 
             // We set the index, level and parent for the node

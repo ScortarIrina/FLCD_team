@@ -310,6 +310,7 @@ public class LR0 {
                     Pair<String, Integer> state = parsingTable.entries.get(workingStack.peek().getSecond()).shifts.stream()
                             .filter(it -> it.getFirst().equals(entry.reduceNonTerminal)).findAny().orElse(null);
 
+                    assert state != null;
                     stateIndex = state.getSecond();
                     lastSymbol = entry.reduceNonTerminal;
                     workingStack.push(new Pair<>(lastSymbol, stateIndex));

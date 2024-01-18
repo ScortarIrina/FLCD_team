@@ -18,17 +18,14 @@ public class ParsingTreeRow {
 
     @Override
     public String toString(){
-        StringBuilder result = new StringBuilder();
 
-        result.append("\tParsingTree.ParsingTreeRow {");
-        result.append("\n\t\t\t\tindex = ").append(index);
-        result.append(", \n\t\t\t\tinfo = ").append(info);
-        result.append(", \n\t\t\t\tleftChild = ").append(leftChild != null ? leftChild.getIndex() : -1);
-        result.append(", \n\t\t\t\trightChild = ").append(rightSibling != null ? rightSibling.getIndex() : -1);
-        result.append(", \n\t\t\t\tparent = ").append(parent != null ? parent.getIndex() : -1);
-        result.append(", \n\t\t\t\tlevel = ").append(level);
-        result.append("\n\t\t}");
-
-        return result.toString();
+        return "\tParsingTree.ParsingTreeRow {" +
+                "\n\t\t\t\tindex = " + index +
+                ", \n\t\t\t\tinfo = " + info +
+                ", \n\t\t\t\tleftChild = " + (leftChild != null ? leftChild.getIndex() : -1) +
+                ", \n\t\t\t\trightChild = " + (rightSibling != null ? rightSibling.getIndex() : -1) +
+                ", \n\t\t\t\tparent = " + (parent != null ? parent.getIndex() : -1) +
+                ", \n\t\t\t\tlevel = " + level +
+                "\n\t\t}";
     }
 }
