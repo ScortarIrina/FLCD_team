@@ -14,24 +14,24 @@ public class Grammar {
     private Set<String> nonTerminals;  // Set of non-terminal symbols in the grammar
     private Set<String> terminals;  // Set of terminal symbols in the grammar
     private Map<List<String>, List<List<String>>> productions;  // Map representing the grammar productions
-    private String startingSymbol;  // The start symbol of the grammar
+    private String start;  // The start symbol of the grammar
     private boolean isCFG;  // Flag indicating if the grammar is a context free grammar(CFG)
     private boolean isEnriched;  // Flag indicating if the grammar is enriched
-    public static String enrichedStartingGrammarSymbol = "S0";  // The state from which an enriched grammar begins
+    public static String firstState = "S0";  // The state from which an enriched grammar begins
 
     private static final Logger LOGGER = Logger.getLogger(Grammar.class.getName());
 
-    public Grammar(Set<String> nonTerminals, Set<String> terminals, String startingSymbol, Map<List<String>, List<List<String>>> productions) {
+    public Grammar(Set<String> nonTerminals, Set<String> terminals, String start, Map<List<String>, List<List<String>>> productions) {
         this.nonTerminals = nonTerminals;
         this.terminals = terminals;
-        this.startingSymbol = startingSymbol;
+        this.start = start;
         this.productions = productions;
         this.isEnriched = true;
     }
 
     public Grammar(String filePath) {
         this.productions = new LinkedHashMap<>();
-        this.loadFromFile(filePath);
+        this.readGrammarFromFile(filePath);
     }
 
     public boolean getIsEnriched() {
@@ -72,7 +72,7 @@ public class Grammar {
      *
      * @param filePath - the path of the file to be read from
      */
-    private void loadFromFile(String filePath) {
+    private void readGrammarFromFile(String filePath) {
         try (Scanner scanner = new Scanner(new File(filePath))) {
             // read the non-terminals from the file
             this.nonTerminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
@@ -81,7 +81,7 @@ public class Grammar {
             this.terminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
 
             // read the starting symbol of the grammar
-            this.startingSymbol = scanner.nextLine();
+            this.start = scanner.nextLine();
 
             // read the lines containing the productions
             this.productions = new LinkedHashMap<>();
@@ -104,7 +104,7 @@ public class Grammar {
      */
     private boolean checkIfCFG() {
         // check if the starting symbol is within the non-terminals
-        if (!this.nonTerminals.contains(this.startingSymbol)) {
+        if (!this.nonTerminals.contains(this.start)) {
             return false;
         }
 
@@ -141,11 +141,11 @@ public class Grammar {
             throw new Exception("The grammar is already enriched!");
         }
 
-        Grammar enrichedGrammar = new Grammar(nonTerminals, terminals, enrichedStartingGrammarSymbol, productions);
+        Grammar enrichedGrammar = new Grammar(nonTerminals, terminals, firstState, productions);
 
-        enrichedGrammar.nonTerminals.add(enrichedStartingGrammarSymbol);
-        enrichedGrammar.productions.putIfAbsent(List.of(enrichedStartingGrammarSymbol), new ArrayList<>());
-        enrichedGrammar.productions.get(List.of(enrichedStartingGrammarSymbol)).add(List.of(startingSymbol));
+        enrichedGrammar.nonTerminals.add(firstState);
+        enrichedGrammar.productions.putIfAbsent(List.of(firstState), new ArrayList<>());
+        enrichedGrammar.productions.get(List.of(firstState)).add(List.of(start));
 
         return enrichedGrammar;
     }

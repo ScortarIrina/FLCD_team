@@ -49,7 +49,7 @@ public class State {
      * The action can be: SHIFT, REDUCE, ACCEPT, REDUCE_REDUCE_CONFLICT or SHIFT_REDUCE_CONFLICT
      */
     public void setActionForState(){
-        if(items.size() == 1 && ((Item)items.toArray()[0]).getRightHandSide().size() == ((Item)items.toArray()[0]).getPositionForDot() && ((Item)this.items.toArray()[0]).getLeftHandSide() == Grammar.enrichedStartingGrammarSymbol){
+        if(items.size() == 1 && ((Item)items.toArray()[0]).getRightHandSide().size() == ((Item)items.toArray()[0]).getPositionForDot() && ((Item)this.items.toArray()[0]).getLeftHandSide() == Grammar.firstState){
             this.stateActionType = ActionTypeEnum.ACCEPT;
         } else if(items.size() == 1 && ((Item) items.toArray()[0]).getRightHandSide().size() == ((Item) items.toArray()[0]).getPositionForDot())
         {

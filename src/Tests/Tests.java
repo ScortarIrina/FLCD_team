@@ -25,8 +25,8 @@ public class Tests {
     public void runClosureTest() {
         lrAlg.canonicalCollection();
         Object[] result = lrAlg.closure(new Item(
-                lrAlg.getWorkingGrammar().getStartingSymbol(),
-                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStartingSymbol()).get(0),
+                lrAlg.getWorkingGrammar().getStart(),
+                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStart()).get(0),
                 0)).getItems().toArray();
         assert result.length == 1;
         assert Objects.equals(result[0], new Item("S0", List.of("a", "A"), 0));
@@ -38,8 +38,8 @@ public class Tests {
         lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         Object[] result = lrAlg.closure(new Item(
-                lrAlg.getWorkingGrammar().getStartingSymbol(),
-                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStartingSymbol()).get(0),
+                lrAlg.getWorkingGrammar().getStart(),
+                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStart()).get(0),
                 0)).getItems().toArray();
         assert result.length == 1;
         assert Objects.equals(result[0], new Item("S0", List.of("a"), 0));
@@ -51,8 +51,8 @@ public class Tests {
         lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         Object[] result = lrAlg.closure(new Item(
-                lrAlg.getWorkingGrammar().getStartingSymbol(),
-                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStartingSymbol()).get(0),
+                lrAlg.getWorkingGrammar().getStart(),
+                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStart()).get(0),
                 0)).getItems().toArray();
         assert result.length == 3;
         assert Objects.equals(result[1], new Item("A", List.of("S"), 0));
@@ -70,8 +70,8 @@ public class Tests {
         lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         State state = lrAlg.closure(new Item(
-                lrAlg.getWorkingGrammar().getStartingSymbol(),
-                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStartingSymbol()).get(0),
+                lrAlg.getWorkingGrammar().getStart(),
+                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStart()).get(0),
                 0));
         State result = lrAlg.goTo(state, state.getSymbolsSucceedingTheDot().get(0));
         assert result.getItems().size() == 2;
@@ -84,8 +84,8 @@ public class Tests {
         lrAlg = new LR0(grammar1);
         lrAlg.canonicalCollection();
         State state = lrAlg.closure(new Item(
-                lrAlg.getWorkingGrammar().getStartingSymbol(),
-                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStartingSymbol()).get(0),
+                lrAlg.getWorkingGrammar().getStart(),
+                lrAlg.getWorkingGrammar().getProductionsForNonTerminal(lrAlg.getGrammar().getStart()).get(0),
                 0));
         State result = lrAlg.goTo(state, state.getSymbolsSucceedingTheDot().get(0));
         assert result.getItems().size() == 1;

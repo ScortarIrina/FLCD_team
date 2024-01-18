@@ -43,151 +43,183 @@ public class Main {
         System.out.println("3. Parse P3.txt\n");
     }
 
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void runGrammar() throws Exception {
         Grammar grammar = new Grammar("src/IO/G1.txt");
         boolean isMenuRunning = true;
+
         while (isMenuRunning) {
             printMenu();
             Scanner keyboard = new Scanner(System.in);
             System.out.print("\nChoose an option (0-9): ");
-            int option = keyboard.nextInt();
-            if (option == 0) {
-                isMenuRunning = false;
-            } else if (option == 1) {
-                System.out.println("\nNon-terminals -> " + grammar.getNonTerminals());
-            } else if (option == 2) {
-                System.out.println("\nTerminals -> " + grammar.getTerminals());
-            } else if (option == 3) {
-                System.out.println("\nStarting symbol -> " + grammar.getStartingSymbol());
-            } else if (option == 4) {
-                System.out.print("\nAll productions:\n");
-                grammar.getProductions().forEach((lhs, rhs) -> System.out.println("\t" + lhs + " -> " + rhs));
-            } else if (option == 5) {
-                Scanner sc = new Scanner(System.in); //System.in is a standard input stream.
-                System.out.print("Enter a non-terminal: ");
-                String nonTerminal = sc.nextLine(); //reads string.
-                System.out.println("\nProductions of the non-terminal: ");
-                List<String> key = new ArrayList<>();
-                key.add(nonTerminal);
-                try {
-                    grammar.getProductions().get(key).forEach((rhs) -> System.out.println(key + " -> " + rhs));
-                } catch (NullPointerException e) {
-                    System.out.println("Error! This non-terminal doesn't exist!");
-                }
-            } else if (option == 6) {
-                boolean result = grammar.isCFG();
-                if (result) {
-                    System.out.println("\nThe grammar is CFG (context-free grammar).");
-                } else {
-                    System.out.println("\nThe grammar is not CFG.");
-                }
-            } else if (option == 7) {
-                emptyFile("src/IO/Out1.txt");
+            String optionstr = keyboard.next();
+            int option = 0;
+            if (isInteger(optionstr)) {
+                option = Integer.parseInt(optionstr);
 
-                Grammar grammar1 = new Grammar("src/IO/G1.txt");
-                LR0 lrAlg = new LR0(grammar1);
-
-                CanonicalCollection canonicalCollection = lrAlg.canonicalCollection();
-
-                System.out.println("States");
-                writeToFile("src/IO/Out2.txt", "States");
-
-                for (int i = 0; i < canonicalCollection.getStates().size(); i++) {
-                    System.out.println("\tstate " + i + " " + canonicalCollection.getStates().get(i));
-                }
-
-                System.out.println("\nState transitions");
-                writeToFile("src/IO/Out2.txt", "\nState transitions");
-
-                for (Map.Entry<Pair<Integer, String>, Integer> entry : canonicalCollection.getAdjacencyList().entrySet()) {
-                    System.out.println("\t" + entry.getKey() + " -> " + entry.getValue());
-                    writeToFile("src/IO/Out2.txt", entry.getKey() + " -> " + entry.getValue());
-                }
-
-                System.out.println();
-
-                ParsingTable parsingTable = lrAlg.getParsingTable(canonicalCollection);
-                if (parsingTable.entries.isEmpty()) {
-                    System.out.println("There are conflicts in the parsing table. We can't go further with the algorithm.");
-                    writeToFile("src/IO/Out2.txt", "There are conflicts in the parsing table. We can't go further with the algorithm.");
-                } else {
-                    System.out.println(parsingTable);
-                    writeToFile("src/IO/Out2.txt", parsingTable.toString());
-                }
-
-                Stack<String> word = readSequence("src/IO/sequence.txt");
-
-                lrAlg.parse(word, parsingTable, "src/IO/Out1.txt");
-
-            } else if (option == 8) {
-                Grammar grammar2 = new Grammar("src/IO/G2.txt");
-                LR0 lrAlg2 = new LR0(grammar2);
-
-                CanonicalCollection canonicalCollection2 = lrAlg2.canonicalCollection();
-
-                System.out.println("States");
-                for (int i = 0; i < canonicalCollection2.getStates().size(); i++) {
-                    System.out.println(i + " " + canonicalCollection2.getStates().get(i));
-                }
-
-                System.out.println("\nState transitions");
-                for (Map.Entry<Pair<Integer, String>, Integer> entry : canonicalCollection2.getAdjacencyList().entrySet()) {
-                    System.out.println("\t" + entry.getKey() + " -> " + entry.getValue());
-                }
-                System.out.println();
-
-                ParsingTable parsingTable2 = lrAlg2.getParsingTable(canonicalCollection2);
-                if (parsingTable2.entries.isEmpty()) {
-                    System.out.println("There are conflicts in the parsing table. We can't go further with the algorithm.");
-                    writeToFile("src/IO/Out2.txt", "There are conflicts in the parsing table. We can't go further with the algorithm.");
-                } else {
-                    System.out.println(parsingTable2);
-                }
-
-
-                boolean stop = false;
-                while (!stop) {
-                    printMenuParser();
-                    Scanner keyboard2 = new Scanner(System.in);
-                    System.out.print("\nChoose an option (0-3): ");
-                    int option2 = keyboard2.nextInt();
-
-                    if (option2 == 0) {
-                        stop = true;
-                    } else if (option2 == 1) {
-                        emptyFile("src/IO/Out2.txt");
-                        MyScanner scanner2 = new MyScanner("src/IO/p1.txt");
-                        scanner2.scan();
-                        printToFile("src/IO/p1.txt".replace(".txt", "PIF.txt"), scanner2.getPif());
-
-                        Stack<String> word2 = readFirstElemFromFile("src/IO/p1PIF.txt");
-
-                        lrAlg2.parse(word2, parsingTable2, "src/IO/Out2.txt");
-                    } else if (option2 == 2) {
-                        emptyFile("src/IO/Out2.txt");
-                        MyScanner scanner3 = new MyScanner("src/IO/p2.txt");
-                        scanner3.scan();
-                        printToFile("src/IO/p2.txt".replace(".txt", "PIF.txt"), scanner3.getPif());
-
-                        Stack<String> word3 = readFirstElemFromFile("src/IO/p2PIF.txt");
-
-                        lrAlg2.parse(word3, parsingTable2, "src/IO/Out2.txt");
-                    } else if (option2 == 3) {
-                        emptyFile("src/IO/Out2.txt");
-                        MyScanner scanner4 = new MyScanner("src/IO/p3.txt");
-                        scanner4.scan();
-                        printToFile("src/IO/p3.txt".replace(".txt", "PIF.txt"), scanner4.getPif());
-
-                        Stack<String> word4 = readFirstElemFromFile("src/IO/p3PIF.txt");
-
-                        lrAlg2.parse(word4, parsingTable2, "src/IO/Out2.txt");
+                if (option == 0) {
+                    isMenuRunning = false;
+                } else if (option == 1) {
+                    System.out.println("\nNon-terminals -> " + grammar.getNonTerminals());
+                } else if (option == 2) {
+                    System.out.println("\nTerminals -> " + grammar.getTerminals());
+                } else if (option == 3) {
+                    System.out.println("\nStarting symbol -> " + grammar.getStart());
+                } else if (option == 4) {
+                    System.out.print("\nAll productions:\n");
+                    grammar.getProductions().forEach((lhs, rhs) -> System.out.println("\t" + lhs + " -> " + rhs));
+                } else if (option == 5) {
+                    Scanner sc = new Scanner(System.in); //System.in is a standard input stream.
+                    System.out.print("Enter a non-terminal: ");
+                    String nonTerminal = sc.nextLine(); //reads string.
+                    System.out.println("\nProductions of the non-terminal: ");
+                    List<String> key = new ArrayList<>();
+                    key.add(nonTerminal);
+                    try {
+                        grammar.getProductions().get(key).forEach((rhs) -> System.out.println(key + " -> " + rhs));
+                    } catch (NullPointerException e) {
+                        System.out.println("Error! This non-terminal doesn't exist!");
                     }
+                } else if (option == 6) {
+                    boolean result = grammar.isCFG();
+                    if (result) {
+                        System.out.println("\nThe grammar is CFG (context-free grammar).");
+                    } else {
+                        System.out.println("\nThe grammar is not CFG.");
+                    }
+                } else if (option == 7) {
+                    emptyFile("src/IO/Out1.txt");
+
+                    Grammar grammar1 = new Grammar("src/IO/G1.txt");
+                    LR0 lrAlg = new LR0(grammar1);
+
+                    CanonicalCollection canonicalCollection = lrAlg.canonicalCollection();
+
+                    System.out.println("States");
+                    writeToFile("src/IO/Out2.txt", "States");
+
+                    for (int i = 0; i < canonicalCollection.getStates().size(); i++) {
+                        System.out.println("\tstate " + i + " " + canonicalCollection.getStates().get(i));
+                    }
+
+                    System.out.println("\nState transitions");
+                    writeToFile("src/IO/Out2.txt", "\nState transitions");
+
+                    for (Map.Entry<Pair<Integer, String>, Integer> entry : canonicalCollection.getAdjacencyList().entrySet()) {
+                        System.out.println("\t" + entry.getKey() + " -> " + entry.getValue());
+                        writeToFile("src/IO/Out2.txt", entry.getKey() + " -> " + entry.getValue());
+                    }
+
+                    System.out.println();
+
+                    ParsingTable parsingTable = lrAlg.getParsingTable(canonicalCollection);
+                    if (parsingTable.entries.isEmpty()) {
+                        System.out.println("There are conflicts in the parsing table. We can't go further with the algorithm.");
+                        writeToFile("src/IO/Out2.txt", "There are conflicts in the parsing table. We can't go further with the algorithm.");
+                    } else {
+                        System.out.println(parsingTable);
+                        writeToFile("src/IO/Out2.txt", parsingTable.toString());
+                    }
+
+                    Stack<String> word = readSequence("src/IO/sequence.txt");
+
+                    lrAlg.parse(word, parsingTable, "src/IO/Out1.txt");
+
+                } else if (option == 8) {
+                    Grammar grammar2 = new Grammar("src/IO/G2.txt");
+                    LR0 lrAlg2 = new LR0(grammar2);
+
+                    CanonicalCollection canonicalCollection2 = lrAlg2.canonicalCollection();
+
+                    System.out.println("States");
+                    for (int i = 0; i < canonicalCollection2.getStates().size(); i++) {
+                        System.out.println(i + " " + canonicalCollection2.getStates().get(i));
+                    }
+
+                    System.out.println("\nState transitions");
+                    for (Map.Entry<Pair<Integer, String>, Integer> entry : canonicalCollection2.getAdjacencyList().entrySet()) {
+                        System.out.println("\t" + entry.getKey() + " -> " + entry.getValue());
+                    }
+                    System.out.println();
+
+                    ParsingTable parsingTable2 = lrAlg2.getParsingTable(canonicalCollection2);
+                    if (parsingTable2.entries.isEmpty()) {
+                        System.out.println("There are conflicts in the parsing table. We can't go further with the algorithm.");
+                        writeToFile("src/IO/Out2.txt", "There are conflicts in the parsing table. We can't go further with the algorithm.");
+                    } else {
+                        System.out.println(parsingTable2);
+                    }
+
+
+                    boolean stop = false;
+                    while (!stop) {
+                        printMenuParser();
+                        Scanner keyboard2 = new Scanner(System.in);
+                        System.out.print("\nChoose an option (0-3): ");
+                        int option2 = keyboard2.nextInt();
+
+                        if (option2 == 0) {
+                            stop = true;
+                        } else if (option2 == 1) {
+                            emptyFile("src/IO/Out2.txt");
+                            MyScanner scanner2 = new MyScanner("src/IO/p1.txt");
+                            scanner2.scan();
+                            printToFile("src/IO/p1.txt".replace(".txt", "PIF.txt"), scanner2.getPif());
+
+                            Stack<String> word2 = readFirstElemFromFile("src/IO/p1PIF.txt");
+
+                            lrAlg2.parse(word2, parsingTable2, "src/IO/Out2.txt");
+                        } else if (option2 == 2) {
+                            emptyFile("src/IO/Out2.txt");
+                            MyScanner scanner3 = new MyScanner("src/IO/p2.txt");
+                            scanner3.scan();
+                            printToFile("src/IO/p2.txt".replace(".txt", "PIF.txt"), scanner3.getPif());
+
+                            Stack<String> word3 = readFirstElemFromFile("src/IO/p2PIF.txt");
+
+                            lrAlg2.parse(word3, parsingTable2, "src/IO/Out2.txt");
+                        } else if (option2 == 3) {
+                            emptyFile("src/IO/Out2.txt");
+                            MyScanner scanner4 = new MyScanner("src/IO/p3.txt");
+                            scanner4.scan();
+                            printToFile("src/IO/p3.txt".replace(".txt", "PIF.txt"), scanner4.getPif());
+
+                            Stack<String> word4 = readFirstElemFromFile("src/IO/p3PIF.txt");
+
+                            lrAlg2.parse(word4, parsingTable2, "src/IO/Out2.txt");
+                        }
+                    }
+                } else if (option == 9) {
+                    Tests test = new Tests();
+                    test.runAllClosureTest();
+                    test.runAllGoToTests();
+                    test.runAllCanonicalTests();
                 }
-            } else if (option == 9) {
-                Tests test = new Tests();
-                test.runAllClosureTest();
-                test.runAllGoToTests();
-                test.runAllCanonicalTests();
+            } else {
+                System.out.println("Invalid option!");
             }
         }
     }

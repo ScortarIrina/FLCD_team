@@ -118,8 +118,8 @@ public class LR0 {
         canonicalCollection.addState(
                 closure(
                         new Item(
-                                workingGrammar.getStartingSymbol(),
-                                workingGrammar.getProductionsForNonTerminal(workingGrammar.getStartingSymbol()).get(0),
+                                workingGrammar.getStart(),
+                                workingGrammar.getProductionsForNonTerminal(workingGrammar.getStart()).get(0),
                                 0
                         )
                 )
