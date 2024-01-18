@@ -6,7 +6,7 @@ import Utils.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RowTable {
+public class ParsingTableRow {
 
     public int stateIndex;
 

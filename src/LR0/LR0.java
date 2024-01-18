@@ -1,7 +1,7 @@
 package LR0;
 
 import ParsingTable.ParsingTable;
-import ParsingTable.RowTable;
+import ParsingTable.ParsingTableRow;
 import ParsingTree.OutputTree;
 import State.*;
 import Utils.Pair;
@@ -16,7 +16,7 @@ import java.util.*;
 public class LR0 {
     private final Grammar grammar;
     private final Grammar workingGrammar;
-    private List<Pair<String, List<String>>> orderedProductions;
+    private List<Pair<String, List<String>>> productions;
 
     public LR0(Grammar grammar) throws Exception {
         this.grammar = grammar;
@@ -27,16 +27,16 @@ public class LR0 {
             this.workingGrammar = this.grammar.getEnrichedGrammar();
         }
 
-        orderedProductions = this.grammar.getOrderedProductions();
+        productions = this.grammar.getOrderedProductions();
     }
 
     /**
-     * With this method we get the non-terminal which is preceded by dot
+     * This method retrieves the non-terminal which appears before the dot in an item
      *
-     * @param item - the item in which we look for the non-terminal
-     * @return - the non-terminal if it is found or null otherwise
+     * @param item - the given item
+     * @return - the non-terminal before the dot, null otherwise
      */
-    public String getNonTerminalPrecededByDot(Item item) {
+    public String getNonTerminalBeforeDot(Item item) {
         try {
             String term = item.getRightHandSide().get(item.getPositionForDot());
             if (!grammar.getNonTerminals().contains(term)) {
@@ -50,12 +50,11 @@ public class LR0 {
 
     }
 
-
     /**
-     * With this method we compute the closure for an item (an item being of the form [A->alpha.beta])
+     * This method computes the closure for an item (an item being of the form [A->alpha.beta])
      *
-     * @param item - the analysis element
-     * @return - the closure for item given as input
+     * @param item - the given element
+     * @return - the closure for the given item
      */
     public State closure(Item item) {
 
@@ -66,7 +65,7 @@ public class LR0 {
             oldClosure = currentClosure;
             Set<Item> newClosure = new LinkedHashSet<>(currentClosure);
             for (Item i : currentClosure) {
-                String nonTerminal = getNonTerminalPrecededByDot(i);
+                String nonTerminal = getNonTerminalBeforeDot(i);
                 if (nonTerminal != null) {
                     for (List<String> prod : grammar.getProductionsForNonTerminal(nonTerminal)) {
                         Item currentItem = new Item(nonTerminal, prod, 0);
@@ -81,23 +80,29 @@ public class LR0 {
     }
 
     /**
-     * With this method, in state S, we search LR0.LR0(0) item that has dot in front of symbol X.
+     * In state S, we search for the LR0 item that has dot in front of symbol X.
      * Move the dot after symbol X and call closure for this new item.
      *
      * @param state - the state S from which we want to move
      * @param elem  - the symbol after we look
-     * @return - returns a State.State containing  a list of states
-     * composed of the states for each computer closure
+     * @return - returns a State containing  a list of states composed of the states for each computer closure
      */
     public State goTo(State state, String elem) {
         Set<Item> result = new LinkedHashSet<>();
 
+        // loop through each LR(0) item in the current state
         for (Item i : state.getItems()) {
             try {
+                // Get the symbol after the dot in the current LR0 item
                 String nonTerminal = i.getRightHandSide().get(i.getPositionForDot());
+
+                // Check if the symbol after the dot matches the symbol we are looking for
+                // Move the dot after the symbol and call closure for the new item
                 if (Objects.equals(nonTerminal, elem)) {
                     Item nextItem = new Item(i.getLeftHandSide(), i.getRightHandSide(), i.getPositionForDot() + 1);
                     State newState = closure(nextItem);
+
+                    // Add the items of the new state to the result
                     result.addAll(newState.getItems());
                 }
             } catch (Exception ignored) {
@@ -108,13 +113,14 @@ public class LR0 {
     }
 
     /**
-     * With this method we compute the canonical collection for the grammar.
+     * This method retrieves the canonical collection for the grammar
      *
-     * @return - the formed canonical collection
+     * @return - the canonical collection
      */
-    public CanonicalCollection canonicalCollection() {
+    public CanonicalCollection getCanonicalCollectionForGrammar() {
         CanonicalCollection canonicalCollection = new CanonicalCollection();
 
+        // add the closure of the initial item to the collection
         canonicalCollection.addState(
                 closure(
                         new Item(
@@ -125,6 +131,7 @@ public class LR0 {
                 )
         );
 
+        // go through each state from the collection and compute the closure for each symbol
         int index = 0;
         while (index < canonicalCollection.getStates().size()) {
             for (String symbol : canonicalCollection.getStates().get(index).getSymbolsSucceedingTheDot()) {
@@ -145,20 +152,20 @@ public class LR0 {
     }
 
     /**
-     * With this method we create the parsing table, if possible and detect conflicts if there are any
+     * This method creates the parsing table and detects conflicts if there are any
      *
-     * @return - the parsing table corresponding to the parsed grammar if we don't have conflicts
-     * - otherwise, return a table with no rows in it
+     * @return - the parsing table corresponding to the parsed grammar if we don't have conflicts,
+     * otherwise, return a table with no rows in it
      */
     public ParsingTable getParsingTable(CanonicalCollection canonicalCollection) throws Exception {
         ParsingTable parsingTable = new ParsingTable();
 
-        for (int i = 0; i < this.canonicalCollection().getStates().size(); i++) {
+        for (int i = 0; i < this.getCanonicalCollectionForGrammar().getStates().size(); i++) {
 
-            State state = this.canonicalCollection().getStates().get(i);
+            State state = this.getCanonicalCollectionForGrammar().getStates().get(i);
 
             // We create a new row entry for our parsing table
-            RowTable row = new RowTable();
+            ParsingTableRow row = new ParsingTableRow();
 
             // We set the number of the state (the index)
             row.stateIndex = i;
@@ -196,8 +203,8 @@ public class LR0 {
                 return parsingTable;
 
                 // If the action is REDUCE, it means the state has only one item, which has the dot at the end
-                // So we set the reduceNonTerminal, which is the left hand side and also set the reduce content which
-                // is the right hand side
+                // So we set the reduceNonTerminal, which is the lhs and also set the reduce content which
+                // is the rhs
             } else if (state.getStateActionType() == ActionTypeEnum.REDUCE) {
                 Item item = state.getItems().stream().filter(Item::dotIsLast).findAny().orElse(null);
                 if (item != null) {
@@ -205,7 +212,7 @@ public class LR0 {
                     row.reduceNonTerminal = item.getLeftHandSide();
                     row.reduceContent = item.getRightHandSide();
                 } else {
-                    throw new Exception("How did you even get here?");
+                    throw new Exception("");
                 }
                 // If the action is ACCEPT, we just initialize all the other left fields with null, because the action was
                 // set in the beginning
@@ -213,7 +220,7 @@ public class LR0 {
                 row.reduceContent = null;
                 row.reduceNonTerminal = null;
                 row.shifts = null;
-                // If the action is SHIFT, we need to look for all the new states that are created from the intial
+                // If the action is SHIFT, we need to look for all the new states that are created from the initial
                 // state and add them to the shifts list
             } else if (state.getStateActionType() == ActionTypeEnum.SHIFT) {
 
@@ -240,7 +247,7 @@ public class LR0 {
 
 
     /**
-     * With this method we parse the input sequence and find if the sequence is accepted by the grammar or not
+     * This method parses the input sequence and finds if it is accepted by the grammar or not
      *
      * @param sequence     - the sequence
      * @param parsingTable - the parsing table which we will use in order to parse
@@ -258,26 +265,26 @@ public class LR0 {
         boolean sem = true;
 
         workingStack.push(new Pair<>(lastSymbol, stateIndex));
-        RowTable lastRow = null;
+        ParsingTableRow lastRow = null;
         String onErrorSymbol = null;
 
         try {
             do {
                 if (!sequence.isEmpty()) {
-                    // We keep the symbol before which an error might occur
+                    // store the current symbol in case an error will occur
                     onErrorSymbol = sequence.peek();
                 }
-                // We update the last row from the table we worked with
+                // update the last row from the table we worked with
                 lastRow = parsingTable.entries.get(stateIndex);
 
-                // We take a copy of the entry from the table and work on it
-                RowTable entry = parsingTable.entries.get(stateIndex);
+                // copy the entry from the table at the current index and work on it
+                ParsingTableRow entry = parsingTable.entries.get(stateIndex);
 
                 if (entry.action.equals(ActionTypeEnum.SHIFT)) {
-                    // If the action is shift, we pop from the input stack
-                    // We look at the last added state from the working stack
-                    // Look into the parsing table at that state, and find out
-                    // From it through what state, we can obtain the symbol popped from the input stack
+                    // - if the action is shift, we pop from the input stack
+                    // - we look at the last added state from the working stack
+                    // - look into the parsing table at that state, and find out from it through what state,
+                    // we can obtain the symbol popped from the input stack
                     String symbol = sequence.pop();
                     Pair<String, Integer> state = entry.shifts.stream().filter(it -> it.getFirst().equals(symbol)).findAny().orElse(null);
 
@@ -311,7 +318,7 @@ public class LR0 {
 
                     // We "form" the production used for reduction and look for its production number
                     var index = new Pair<>(entry.reduceNonTerminal, entry.reduceContent);
-                    int productionNumber = this.orderedProductions.indexOf(index);
+                    int productionNumber = this.productions.indexOf(index);
 
                     outputNumberStack.push(productionNumber);
                 } else {

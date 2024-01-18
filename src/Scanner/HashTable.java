@@ -1,9 +1,11 @@
 package Scanner;
 
 import Utils.Pair;
+import lombok.Data;
 
 import java.util.ArrayList;
 
+@Data
 public class HashTable {
     private Integer size;
     private ArrayList<ArrayList<String>> table;
@@ -28,14 +30,6 @@ public class HashTable {
         }
 
         return this.table.get(pos.getFirst()).get(pos.getSecond());
-    }
-
-    /**
-     * This method returns the size of the haspmap
-     * @return the size of the hashmap
-     */
-    public Integer getSize(){
-        return size;
     }
 
     /**
@@ -103,7 +97,7 @@ public class HashTable {
     public String toString() {
         StringBuilder computedString = new StringBuilder();
         for(int i = 0; i < this.table.size(); i++){
-            if(this.table.get(i).size() > 0){
+            if(!this.table.get(i).isEmpty()){
                 computedString.append(i);
                 computedString.append(" - ");
                 computedString.append(this.table.get(i));

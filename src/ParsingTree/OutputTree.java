@@ -2,6 +2,7 @@ package ParsingTree;
 
 import LR0.Grammar;
 import Utils.Pair;
+import lombok.Data;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class OutputTree {
 
     private ParsingTreeRow root;
@@ -23,20 +25,16 @@ public class OutputTree {
 
     private List<ParsingTreeRow> treeList;
 
-    public OutputTree(Grammar grammar){
+    public OutputTree(Grammar grammar) {
         this.grammar = grammar;
     }
 
-    public ParsingTreeRow getRoot(){
-        return this.root;
-    }
-
     /**
-     * With this method we start the generation of the parse tree
+     * This method generates a parsing tree from a given sequence
+     *
      * @param inputSequence - the list which contains the production numbers (represents actually the output band from the parse algorithm)
-     * @return - the root of the tree
      */
-    public ParsingTreeRow generateTreeFromSequence(List<Integer> inputSequence){
+    public void generateTreeFromSequence(List<Integer> inputSequence) {
         int productionIndex = inputSequence.get(0);
 
         Pair<String, List<String>> productionString = this.grammar.getOrderedProductions().get(productionIndex);
@@ -46,23 +44,21 @@ public class OutputTree {
         this.root.setLevel(0);
 
         this.root.setLeftChild(buildRecursive(1, this.root, productionString.getSecond(), inputSequence));
-
-        return this.root;
     }
 
-
     /**
-     * With this method we build recursively each node from the parse tree
-     * If it is a terminal, we try to set its right sibling as well
-     * If it is a non-terminal, we try to set its right sibling and its left child as well
-     * @param level - the level in the tree
-     * @param parent - the parent of the current node from the tree
+     * This method recursively builds each node from the parsing tree.
+     * If it is a terminal, we try to set its right sibling, if it is a non-terminal, we try to set its right sibling
+     * and its left child
+     *
+     * @param level          - the level in the tree
+     * @param parent         - the parent of the current node from the tree
      * @param currentContent - the current elements which compose the production (So if we had A -> a b, then the currentContent is [a, b])
-     * @param inputSequence - the list with the production numbers from the output band of the parse algorithm
+     * @param inputSequence  - the list with the production numbers from the output band of the parse algorithm
      * @return - the newly created node
      */
-    public ParsingTreeRow buildRecursive(int level, ParsingTreeRow parent, List<String> currentContent, List<Integer> inputSequence){
-        if(currentContent.isEmpty() || this.indexInInput >= inputSequence.size() + 1){
+    public ParsingTreeRow buildRecursive(int level, ParsingTreeRow parent, List<String> currentContent, List<Integer> inputSequence) {
+        if (currentContent.isEmpty() || this.indexInInput >= inputSequence.size() + 1) {
             return null;
         }
 
@@ -71,7 +67,7 @@ public class OutputTree {
 
         // If the symbol is a terminal, then we only need to set for it the rightSibling
         // It cannot be a parent for any other node in the tree
-        if(this.grammar.getTerminals().contains(currentSymbol)){
+        if (this.grammar.getTerminals().contains(currentSymbol)) {
 
             // We create a new node in our tree with the current symbol
             ParsingTreeRow node = new ParsingTreeRow(currentSymbol);
@@ -98,7 +94,7 @@ public class OutputTree {
         }
         // If the symbol is a non-terminal, then it means it may have a right sibling,
         // and it will be a parent too for another node
-        else if(this.grammar.getNonTerminals().contains(currentSymbol)){
+        else if (this.grammar.getNonTerminals().contains(currentSymbol)) {
 
 
             // We get the production index corresponding to the non-terminal
@@ -111,30 +107,29 @@ public class OutputTree {
             ParsingTreeRow node = new ParsingTreeRow(currentSymbol);
 
             // We set the index, level and parent for the node
-             node.setIndex(this.currentIndex);
-             node.setLevel(level);
-             node.setParent(parent);
+            node.setIndex(this.currentIndex);
+            node.setLevel(level);
+            node.setParent(parent);
 
             // We create a new variable for the new level, which we are going to use to set the left child
-             int newLevel = level + 1;
-             if(newLevel > this.maxLevel)
-                 this.maxLevel = newLevel;
+            int newLevel = level + 1;
+            if (newLevel > this.maxLevel)
+                this.maxLevel = newLevel;
 
-             this.currentIndex++;
-             this.indexInInput++;
+            this.currentIndex++;
+            this.indexInInput++;
 
-             // We call the recursion to set the left child
-             node.setLeftChild(buildRecursive(newLevel, node, productionString.getSecond(), inputSequence));
+            // We call the recursion to set the left child
+            node.setLeftChild(buildRecursive(newLevel, node, productionString.getSecond(), inputSequence));
 
-             List<String> newList = new ArrayList<>(currentContent);
-             newList.remove(0);
+            List<String> newList = new ArrayList<>(currentContent);
+            newList.remove(0);
 
-             // We call the recursion to set the right sibling
-             node.setRightSibling(buildRecursive(level, parent, newList, inputSequence));
+            // We call the recursion to set the right sibling
+            node.setRightSibling(buildRecursive(level, parent, newList, inputSequence));
 
-             return node;
-        }
-        else {
+            return node;
+        } else {
             System.out.println("ERROR");
             return null;
         }
@@ -144,9 +139,9 @@ public class OutputTree {
         this.treeList = new ArrayList<>();
         createList(node);
 
-        for(int i = 0; i <= this.maxLevel; i++){
-            for(ParsingTreeRow n: this.treeList){
-                if(n.getLevel() == i){
+        for (int i = 0; i <= this.maxLevel; i++) {
+            for (ParsingTreeRow n : this.treeList) {
+                if (n.getLevel() == i) {
                     System.out.println("\t" + n);
                     writeToFile(filePath, n.toString());
                 }
@@ -165,16 +160,17 @@ public class OutputTree {
     /**
      * With this method we compute the order in which the nodes should be in the parsing tree
      * And we effectively create it
+     *
      * @param node - the node from which we start the construction (the root in our case)
      */
-    public void createList(ParsingTreeRow node){
-        if(node == null)
+    public void createList(ParsingTreeRow node) {
+        if (node == null)
             return;
 
-        while(node != null){
+        while (node != null) {
 
             this.treeList.add(node);
-            if(node.getLeftChild() != null){
+            if (node.getLeftChild() != null) {
                 createList(node.getLeftChild());
             }
 

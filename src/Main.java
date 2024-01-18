@@ -116,7 +116,7 @@ public class Main {
                     Grammar grammar1 = new Grammar("src/IO/G1.txt");
                     LR0 lrAlg = new LR0(grammar1);
 
-                    CanonicalCollection canonicalCollection = lrAlg.canonicalCollection();
+                    CanonicalCollection canonicalCollection = lrAlg.getCanonicalCollectionForGrammar();
 
                     System.out.println("States");
                     writeToFile("src/IO/Out2.txt", "States");
@@ -152,7 +152,7 @@ public class Main {
                     Grammar grammar2 = new Grammar("src/IO/G2.txt");
                     LR0 lrAlg2 = new LR0(grammar2);
 
-                    CanonicalCollection canonicalCollection2 = lrAlg2.canonicalCollection();
+                    CanonicalCollection canonicalCollection2 = lrAlg2.getCanonicalCollectionForGrammar();
 
                     System.out.println("States");
                     for (int i = 0; i < canonicalCollection2.getStates().size(); i++) {

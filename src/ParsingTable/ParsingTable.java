@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ParsingTable {
 
-    public List<RowTable> entries;
+    public List<ParsingTableRow> entries;
 
 
     public ParsingTable() {
@@ -16,7 +16,7 @@ public class ParsingTable {
     public String toString() {
         StringBuilder result = new StringBuilder("Parsing Table: \n");
 
-        for (RowTable entry : entries) {
+        for (ParsingTableRow entry : entries) {
             result.append("\t").append(entry);
             result.append("\n");
         }
