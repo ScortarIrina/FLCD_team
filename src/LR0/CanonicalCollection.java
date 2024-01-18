@@ -18,11 +18,10 @@ public class CanonicalCollection {
     }
 
     /**
-     * With this method we keep track of which states are created by another state and through what symbol
-     *
-     * @param indexFirstState  - the index of the state we start from
-     * @param indexSecondState - the index of the state we obtained
-     * @param symbol           - the symbol we goTo
+     * This method Keeps track of the states that were created by another state and through what symbol
+     * @param indexFirstState - the starting state index
+     * @param indexSecondState - the obtained state index
+     * @param symbol - the symbol we goTo
      */
 
     public void connectStates(Integer indexFirstState, Integer indexSecondState, String symbol){
@@ -30,8 +29,8 @@ public class CanonicalCollection {
     }
 
     /**
-     * With this method we add a new state to the list of states
-     * @param state - the state we are about to add
+     * This method adds a new state to the list of states
+     * @param state - the state to be added
      */
     public void addState(State state){
         this.states.add(states.size(), state);
