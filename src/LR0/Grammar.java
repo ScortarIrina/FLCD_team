@@ -6,51 +6,84 @@ import lombok.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Data
 public class Grammar {
-    private Set<String> nonTerminals;
-    private Set<String> terminals;
-    private Map<List<String>, List<List<String>>> productions;
-    private String startingSymbol;
-    private boolean isCFG;
-    private boolean isEnriched;
+    private Set<String> nonTerminals;  // Set of non-terminal symbols in the grammar
+    private Set<String> terminals;  // Set of terminal symbols in the grammar
+    private Map<List<String>, List<List<String>>> productions;  // Map representing the grammar productions
+    private String startingSymbol;  // The start symbol of the grammar
+    private boolean isCFG;  // Flag indicating if the grammar is a context free grammar(CFG)
+    private boolean isEnriched;  // Flag indicating if the grammar is enriched
+    public static String enrichedStartingGrammarSymbol = "S0";  // The state from which an enriched grammar begins
 
-    public static String enrichedStartingGrammarSymbol = "S0";
+    private static final Logger LOGGER = Logger.getLogger(Grammar.class.getName());
+
+    public Grammar(Set<String> nonTerminals, Set<String> terminals, String startingSymbol, Map<List<String>, List<List<String>>> productions) {
+        this.nonTerminals = nonTerminals;
+        this.terminals = terminals;
+        this.startingSymbol = startingSymbol;
+        this.productions = productions;
+        this.isEnriched = true;
+    }
+
+    public Grammar(String filePath) {
+        this.productions = new LinkedHashMap<>();
+        this.loadFromFile(filePath);
+    }
+
+    public boolean getIsEnriched() {
+        return this.isEnriched;
+    }
+
+    public boolean isCFG() {
+        return this.isCFG;
+    }
 
     /**
-     * With this method we first:
-     * -> Split the production by the left right hand side separator ("->")
-     * -> Then we split the left hand side by space (we can have A B -> something)
-     * -> Then we split the right hand side by "|".
-     * -> We go through each production from the right hand side and format each of the in order to be added to the map
+     * This method:
+     * - splits the production by the left right hand side separator (" ::= ")
+     * - splits the lhs symbols by space
+     * - splits the rhs by "|".
+     * - goes through each production from the rhs and format each of the in order to be added to the map
      *
-     * @param production -> represents the production we are about to work
+     * @param production -> the production to be processed
      */
     private void processProduction(String production) {
+        // split the production in lhs and rhs
         String[] leftAndRightHandSide = production.split(" ::= ");
+
+        // split the lhs
         List<String> splitLHS = List.of(leftAndRightHandSide[0].split(" "));
+
+        // split the rhs
         String[] splitRHS = leftAndRightHandSide[1].split("\\|");
 
         this.productions.putIfAbsent(splitLHS, new ArrayList<>());
-        for (int i = 0; i < splitRHS.length; i++) {
-            this.productions.get(splitLHS).add(Arrays.stream(splitRHS[i].split(" ")).collect(Collectors.toList()));
+        for (String splitRH : splitRHS) {
+            this.productions.get(splitLHS).add(Arrays.stream(splitRH.split(" ")).collect(Collectors.toList()));
         }
     }
 
     /**
-     * With this method we load the content from the file (we read every line from the file and
-     * classify everything we read as a terminal/non-terminal/production and so on).
+     * This method reads every line from the file and classifies everything as a terminal/non-terminal/production
      *
-     * @param filePath - the path where the file we are reading from is
+     * @param filePath - the path of the file to be read from
      */
     private void loadFromFile(String filePath) {
         try (Scanner scanner = new Scanner(new File(filePath))) {
+            // read the non-terminals from the file
             this.nonTerminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
+
+            // read the terminals from the file
             this.terminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
+
+            // read the starting symbol of the grammar
             this.startingSymbol = scanner.nextLine();
 
+            // read the lines containing the productions
             this.productions = new LinkedHashMap<>();
             while (scanner.hasNextLine()) {
                 this.processProduction(scanner.nextLine());
@@ -59,29 +92,31 @@ public class Grammar {
             this.isCFG = this.checkIfCFG();
             this.isEnriched = false;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.severe("Error while reading the file!");
+            LOGGER.severe(e.getMessage());
         }
     }
 
     /**
-     * With this method we check if a grammar is a context free grammar
-     * -> First we check if the starting symbols is found within the non-terminals
-     * -> Second we check if on the left hand side we have only one non-terminal (for each production)
-     * -> Third we check if the productions of that left hand side non-terminal can be found within the non-terminals set or terminals set or is equal to the empty sequence
+     * This method checks if a grammar is CFG.
      *
-     * @return true if the grammar is a CFG, false otherwise
+     * @return - true if the grammar is CFG, false otherwise
      */
     private boolean checkIfCFG() {
+        // check if the starting symbol is within the non-terminals
         if (!this.nonTerminals.contains(this.startingSymbol)) {
             return false;
         }
 
+        // loop through the productions
         for (List<String> leftHandSide : this.productions.keySet()) {
-            // On the left hand side we need to have only one element (A -> a, not AB -> a, where A and B are different non-terminals)
+            // check if the lhs of each production contains only 1 non-terminal
             if (leftHandSide.size() != 1 || !this.nonTerminals.contains(leftHandSide.get(0))) {
                 return false;
             }
 
+            // loop through the lhs symbols of each production and check if any of them can be found through the
+            // non-terminals/terminals or is empty
             for (List<String> possibleNextMoves : this.productions.get(leftHandSide)) {
                 for (String possibleNextMove : possibleNextMoves) {
                     if (!this.nonTerminals.contains(possibleNextMove) && !this.terminals.contains(possibleNextMove) && !possibleNextMove.equals("EPSILON")) {
@@ -94,35 +129,16 @@ public class Grammar {
         return true;
     }
 
-    public Grammar(Set<String> nonTerminals, Set<String> terminals, String startingSymbol, Map<List<String>, List<List<String>>> productions) {
-        this.nonTerminals = nonTerminals;
-        this.terminals = terminals;
-        this.startingSymbol = startingSymbol;
-        this.productions = productions;
-        this.isEnriched = true;
-    }
-
-    public boolean getIsEnriched(){
-        return this.isEnriched;
-    }
-    public Grammar(String filePath) {
-        this.productions = new LinkedHashMap<>();
-        this.loadFromFile(filePath);
-    }
-
-    public boolean isCFG() {
-        return this.isCFG;
-    }
-
     /**
-     * With this method we prepare the grammar for the LR0.LR0(0) algorithm by adding another starting state S0
-     * which has the production S0 -> currentStartingSymbol, if it is already enriched, we just throw an error
+     * This method prepares the grammar for the LR0 algorithm by adding another starting state S0
+     * which has the production S0 -> currentStartingSymbol
      *
-     * @return the enriched grammar
+     * @return - the enriched grammar
+     * @throws Exception - if the grammar is already enriched, an exception is thrown
      */
     public Grammar getEnrichedGrammar() throws Exception {
         if (isEnriched) {
-            throw new Exception("The LR0.Grammar is already enriched!");
+            throw new Exception("The grammar is already enriched!");
         }
 
         Grammar enrichedGrammar = new Grammar(nonTerminals, terminals, enrichedStartingGrammarSymbol, productions);
@@ -135,28 +151,25 @@ public class Grammar {
     }
 
     /**
-     * With this method, we go through all the productions, and for a non-terminal from the left hand side, we write all the productions separately as pairs
+     * This method goes through all the productions: for a non-terminal from the lhs, write all the productions
+     * separately as pairs
      *
-     * @return a list of pairs which represents each production individually
+     * @return - a list of pairs representing each production individually
      */
     public List<Pair<String, List<String>>> getOrderedProductions() {
-
         List<Pair<String, List<String>>> result = new ArrayList<>();
 
-        this.productions.forEach(
-                (lhs, rhs) -> rhs.forEach(
-                        (prod) -> result.add(new Pair<>(lhs.get(0), prod))
-                )
-        );
+        this.productions.forEach((lhs, rhs) -> rhs.forEach((prod) -> result.add(new Pair<>(lhs.get(0), prod))));
 
         return result;
 
     }
 
     /**
-     * With this method we get the productions for a non-terminal
-     * @param nonTerminal -  the non-terminal for which we want to get the productions
-     * @return - productions of the given non-terminal
+     * This method retrieves the productions corresponding to a non-terminal
+     *
+     * @param nonTerminal -  the given non-terminal
+     * @return - the productions corresponding to the given non-terminal
      */
     public List<List<String>> getProductionsForNonTerminal(String nonTerminal) {
         return getProductions().get(List.of(nonTerminal));

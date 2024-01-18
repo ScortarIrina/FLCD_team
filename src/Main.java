@@ -60,7 +60,7 @@ public class Main {
             } else if (option == 3) {
                 System.out.println("\nStarting symbol -> " + grammar.getStartingSymbol());
             } else if (option == 4) {
-                System.out.print("\nAll productions: ");
+                System.out.print("\nAll productions:\n");
                 grammar.getProductions().forEach((lhs, rhs) -> System.out.println("\t" + lhs + " -> " + rhs));
             } else if (option == 5) {
                 Scanner sc = new Scanner(System.in); //System.in is a standard input stream.
