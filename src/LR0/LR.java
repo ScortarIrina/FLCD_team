@@ -132,14 +132,13 @@ public class LR {
         while (index < canonicalCollection.getStates().size()) {
             for (String symbol : canonicalCollection.getStates().get(index).getSymbolsSucceedingTheDot()) {
                 State newState = goTo(canonicalCollection.getStates().get(index), symbol);
-                if (newState.getItems().size() != 0) {
+                if (!newState.getItems().isEmpty()) {
                     int indexState = canonicalCollection.getStates().indexOf(newState);
                     if (indexState == -1) {
                         canonicalCollection.addState(newState);
                         indexState = canonicalCollection.getStates().size() - 1;
                     }
-//                    System.out.println("(" + index + ", " + symbol + ") -> " + indexState);
-                    canonicalCollection.connectStates(index, symbol, indexState);
+                    canonicalCollection.connectStates(index, indexState, symbol);
                 }
             }
             ++index;

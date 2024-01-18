@@ -3,17 +3,17 @@ The sequence is ACCEPTED
 
 Production strings:
 	program -> [compound_statement]
-	compound_statement -> [{, statement_list, }]
-	statement_list -> [statement_list, statement]
+	compound_statement -> [{, statementList, }]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [write_statement]
 	write_statement -> [write, (, IDENTIFIER, )]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [structure_statement]
 	structure_statement -> [while_statement]
 	while_statement -> [while, (, condition, ), compound_statement]
-	compound_statement -> [{, statement_list, }]
-	statement_list -> [statement_list, statement]
+	compound_statement -> [{, statementList, }]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [assignment_statement]
 	assignment_statement -> [IDENTIFIER, =, ar_expression]
@@ -23,7 +23,7 @@ Production strings:
 	term -> [IDENTIFIER]
 	ar_expression -> [term]
 	term -> [IDENTIFIER]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [assignment_statement]
 	assignment_statement -> [IDENTIFIER, =, ar_expression]
@@ -33,7 +33,7 @@ Production strings:
 	term -> [IDENTIFIER]
 	ar_expression -> [term]
 	term -> [IDENTIFIER]
-	statement_list -> [statement]
+	statementList -> [statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [read_statement]
 	read_statement -> [read, (, IDENTIFIER, )]
@@ -43,29 +43,29 @@ Production strings:
 	relation -> [>]
 	ar_expression -> [term]
 	term -> [IDENTIFIER]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [read_statement]
 	read_statement -> [read, (, IDENTIFIER, )]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [assignment_statement]
 	assignment_statement -> [IDENTIFIER, =, ar_expression]
 	ar_expression -> [term]
 	term -> [CONST]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [declaration]
 	declaration -> [primitive_declaration]
 	primitive_declaration -> [simple_type, IDENTIFIER]
 	simple_type -> [int]
-	statement_list -> [statement_list, statement]
+	statementList -> [statementList, statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [declaration]
 	declaration -> [primitive_declaration]
 	primitive_declaration -> [simple_type, IDENTIFIER]
 	simple_type -> [int]
-	statement_list -> [statement]
+	statementList -> [statement]
 	statement -> [simple_statement, ;]
 	simple_statement -> [declaration]
 	declaration -> [primitive_declaration]
@@ -101,7 +101,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 3, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 4, 
 				rightChild = 124, 
 				parent = 1, 
@@ -117,7 +117,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 4, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 5, 
 				rightChild = 12, 
 				parent = 3, 
@@ -149,7 +149,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 13, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 14, 
 				rightChild = 78, 
 				parent = 12, 
@@ -181,7 +181,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 79, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 80, 
 				rightChild = 87, 
 				parent = 78, 
@@ -253,7 +253,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 88, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 89, 
 				rightChild = 97, 
 				parent = 87, 
@@ -333,7 +333,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 98, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 99, 
 				rightChild = 106, 
 				parent = 97, 
@@ -357,7 +357,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 20, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 21, 
 				rightChild = 67, 
 				parent = 18, 
@@ -453,7 +453,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 107, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 108, 
 				rightChild = 115, 
 				parent = 106, 
@@ -469,7 +469,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 21, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 22, 
 				rightChild = 39, 
 				parent = 20, 
@@ -581,7 +581,7 @@ The output tree:
 		}
 	ParsingTree.ParsingTreeRow {
 				index = 40, 
-				info = statement_list, 
+				info = statementList, 
 				leftChild = 41, 
 				rightChild = 58, 
 				parent = 39, 
@@ -1075,127 +1075,3 @@ The output tree:
 				parent = 54, 
 				level = 17
 		}
-States
-
-State transitions
-(0, S) -> 1
-(0, a) -> 2
-(2, A) -> 3
-(2, b) -> 4
-(2, c) -> 5
-(4, A) -> 6
-(4, b) -> 4
-(4, c) -> 5
-Parsing Table: 
-	Row {
-		stateIndex= 0,
-		action='SHIFT',
-		reduceNonTerminal='null',
-		reduceContent = null,
-		shifts = [(S, 1), (a, 2)]
-	}
-	Row {
-		stateIndex= 1,
-		action='ACCEPT',
-		reduceNonTerminal='null',
-		reduceContent = null,
-		shifts = null
-	}
-	Row {
-		stateIndex= 2,
-		action='SHIFT',
-		reduceNonTerminal='null',
-		reduceContent = null,
-		shifts = [(A, 3), (b, 4), (c, 5)]
-	}
-	Row {
-		stateIndex= 3,
-		action='REDUCE',
-		reduceNonTerminal='S',
-		reduceContent = [a, A],
-		shifts = null
-	}
-	Row {
-		stateIndex= 4,
-		action='SHIFT',
-		reduceNonTerminal='null',
-		reduceContent = null,
-		shifts = [(A, 6), (b, 4), (c, 5)]
-	}
-	Row {
-		stateIndex= 5,
-		action='REDUCE',
-		reduceNonTerminal='A',
-		reduceContent = [c],
-		shifts = null
-	}
-	Row {
-		stateIndex= 6,
-		action='REDUCE',
-		reduceNonTerminal='A',
-		reduceContent = [b, A],
-		shifts = null
-	}
-
-States
-
-State transitions
-(0, S) -> 1
-(0, a) -> 2
-(2, A) -> 3
-(2, b) -> 4
-(2, c) -> 5
-(4, A) -> 6
-(4, b) -> 4
-(4, c) -> 5
-Parsing Table: 
-	Row {
-		stateIndex = 0,
-		action ='SHIFT',
-		reduceNonTerminal ='null',
-		reduceContent = null,
-		shifts = [(S, 1), (a, 2)]
-	}
-	Row {
-		stateIndex = 1,
-		action ='ACCEPT',
-		reduceNonTerminal ='null',
-		reduceContent = null,
-		shifts = null
-	}
-	Row {
-		stateIndex = 2,
-		action ='SHIFT',
-		reduceNonTerminal ='null',
-		reduceContent = null,
-		shifts = [(A, 3), (b, 4), (c, 5)]
-	}
-	Row {
-		stateIndex = 3,
-		action ='REDUCE',
-		reduceNonTerminal ='S',
-		reduceContent = [a, A],
-		shifts = null
-	}
-	Row {
-		stateIndex = 4,
-		action ='SHIFT',
-		reduceNonTerminal ='null',
-		reduceContent = null,
-		shifts = [(A, 6), (b, 4), (c, 5)]
-	}
-	Row {
-		stateIndex = 5,
-		action ='REDUCE',
-		reduceNonTerminal ='A',
-		reduceContent = [c],
-		shifts = null
-	}
-	Row {
-		stateIndex = 6,
-		action ='REDUCE',
-		reduceNonTerminal ='A',
-		reduceContent = [b, A],
-		shifts = null
-	}
-

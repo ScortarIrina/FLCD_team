@@ -1,23 +1,15 @@
 package LR0;
 
 import Utils.Pair;
+import lombok.Data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Data
 public class Grammar {
-
-
-    private final String ELEMENT_SEPARATOR = " ";
-
-    private final String SEPARATOR_OR_TRANSITION = "\\|";
-    private final String TRANSITION_CONCATENATION = " ";
-    private final String EPSILON = "EPS";
-    private final String SEPARATOR_LEFT_RIGHT_HAND_SIDE = "->";
-
-    // LR0.LR(0)
     private Set<String> nonTerminals;
     private Set<String> terminals;
     private Map<List<String>, List<List<String>>> productions;
@@ -37,13 +29,13 @@ public class Grammar {
      * @param production -> represents the production we are about to work
      */
     private void processProduction(String production) {
-        String[] leftAndRightHandSide = production.split(this.SEPARATOR_LEFT_RIGHT_HAND_SIDE);
-        List<String> splitLHS = List.of(leftAndRightHandSide[0].split(this.TRANSITION_CONCATENATION));
-        String[] splitRHS = leftAndRightHandSide[1].split(this.SEPARATOR_OR_TRANSITION);
+        String[] leftAndRightHandSide = production.split(" ::= ");
+        List<String> splitLHS = List.of(leftAndRightHandSide[0].split(" "));
+        String[] splitRHS = leftAndRightHandSide[1].split("\\|");
 
         this.productions.putIfAbsent(splitLHS, new ArrayList<>());
         for (int i = 0; i < splitRHS.length; i++) {
-            this.productions.get(splitLHS).add(Arrays.stream(splitRHS[i].split(this.TRANSITION_CONCATENATION)).collect(Collectors.toList()));
+            this.productions.get(splitLHS).add(Arrays.stream(splitRHS[i].split(" ")).collect(Collectors.toList()));
         }
     }
 
@@ -55,8 +47,8 @@ public class Grammar {
      */
     private void loadFromFile(String filePath) {
         try (Scanner scanner = new Scanner(new File(filePath))) {
-            this.nonTerminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(this.ELEMENT_SEPARATOR)));
-            this.terminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(this.ELEMENT_SEPARATOR)));
+            this.nonTerminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
+            this.terminals = new LinkedHashSet<>(List.of(scanner.nextLine().split(" ")));
             this.startingSymbol = scanner.nextLine();
 
             this.productions = new LinkedHashMap<>();
@@ -92,7 +84,7 @@ public class Grammar {
 
             for (List<String> possibleNextMoves : this.productions.get(leftHandSide)) {
                 for (String possibleNextMove : possibleNextMoves) {
-                    if (!this.nonTerminals.contains(possibleNextMove) && !this.terminals.contains(possibleNextMove) && !possibleNextMove.equals(this.EPSILON)) {
+                    if (!this.nonTerminals.contains(possibleNextMove) && !this.terminals.contains(possibleNextMove) && !possibleNextMove.equals("EPSILON")) {
                         return false;
                     }
                 }
@@ -116,22 +108,6 @@ public class Grammar {
     public Grammar(String filePath) {
         this.productions = new LinkedHashMap<>();
         this.loadFromFile(filePath);
-    }
-
-    public Set<String> getNonTerminals() {
-        return this.nonTerminals;
-    }
-
-    public Set<String> getTerminals() {
-        return this.terminals;
-    }
-
-    public Map<List<String>, List<List<String>>> getProductions() {
-        return this.productions;
-    }
-
-    public String getStartingSymbol() {
-        return this.startingSymbol;
     }
 
     public boolean isCFG() {
