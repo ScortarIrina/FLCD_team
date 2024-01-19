@@ -250,18 +250,38 @@ public class LR0 {
      * This method parses the input sequence and finds if it is accepted by the grammar or not
      *
      * @param sequence     - the sequence
-     * @param parsingTable - the parsing table which we will use in order to parse
-     * @param filePath     - the file path where we will display the parse result
+     * @param parsingTable - the parsing table which we will use in order to parseSequence
+     * @param filePath     - the file path where we will display the parseSequence result
      * @throws IOException - in case of input output exception for writing/reading the file
      */
-    public void parse(Stack<String> sequence, ParsingTable parsingTable, String filePath) throws IOException {
+    public void parseSequence(Stack<String> sequence, ParsingTable parsingTable, String filePath) throws IOException {
+        // WORKING STACK - the state of the parsing process
+        //               - keeps track of the symbols and states the parser reads through the input sequence
+        //               - each element is a pair containing the last symbol read and state index
+        //               - for a SHIFT action, a symbol is popped from the input sequence, and the corresponding state
+        //                 is pushed onto the working stack
+        //               - for a REDUCE action, symbols are popped from the working stack based on the production rule
+        //                 being reduced, and the resulting non-terminal and state are pushed onto the stack
         Stack<Pair<String, Integer>> workingStack = new Stack<>();
+
+        // OUTPUT STACK - the derivation of the input sequence
+        //              - keeps track of the production strings generated during REDUCTION
+        //              - for each reduction, the prod. str. assoc. with the reduction is pushed onto the output stack
+        //              - its content is later used to display the production strings in reverse order
         Stack<String> outputStack = new Stack<>();
+
+        // - keeps track of the production numbers corresponding to the production strings in the output stack
+        // - for each REDUCE action, the production number is pushed into this stack
+        // - its content is later used to display the production numbers associated with the production strings
         Stack<Integer> outputNumberStack = new Stack<>();
 
+        // last symbol read during the parsing
         String lastSymbol = "";
+
+        // keeps track of the current index in the parsing table
         int stateIndex = 0;
 
+        // controls the main parsing loop
         boolean sem = true;
 
         workingStack.push(new Pair<>(lastSymbol, stateIndex));
@@ -281,10 +301,10 @@ public class LR0 {
                 ParsingTableRow entry = parsingTable.entries.get(stateIndex);
 
                 if (entry.action.equals(ActionTypeEnum.SHIFT)) {
-                    // - if the action is shift, we pop from the input stack
+                    // - if the action is SHIFT, we pop from the input stack
                     // - we look at the last added state from the working stack
                     // - look into the parsing table at that state, and find out from it through what state,
-                    // we can obtain the symbol popped from the input stack
+                    //   we can obtain the symbol popped from the input stack
                     String symbol = sequence.pop();
                     Pair<String, Integer> state = entry.shifts.stream().filter(it -> it.getFirst().equals(symbol)).findAny().orElse(null);
 

@@ -31,7 +31,7 @@ public class Main {
         System.out.println("4. All productions");
         System.out.println("5. All productions for a non-terminal");
         System.out.println("6. Check if it is a CFG");
-        System.out.println("7. LR0 for G1.txt and parse sequence.txt");
+        System.out.println("7. LR0 for G1.txt and parseSequence sequence.txt");
         System.out.println("8. LR0 for G2.txt");
         System.out.println("9. Run tests for the grammar and LR0");
     }
@@ -129,7 +129,7 @@ public class Main {
                     writeToFile("src/IO/Out2.txt", "\nState transitions");
 
                     for (Map.Entry<Pair<Integer, String>, Integer> entry : canonicalCollection.getAdjacencyList().entrySet()) {
-                        System.out.println("\t" + entry.getKey() + " -> " + entry.getValue());
+                        System.out.println("\t" + entry.getKey() + " -> transition to state " + entry.getValue());
                         writeToFile("src/IO/Out2.txt", entry.getKey() + " -> " + entry.getValue());
                     }
 
@@ -146,7 +146,7 @@ public class Main {
 
                     Stack<String> word = readSequence("src/IO/sequence.txt");
 
-                    lrAlg.parse(word, parsingTable, "src/IO/Out1.txt");
+                    lrAlg.parseSequence(word, parsingTable, "src/IO/Out1.txt");
 
                 } else if (option == 8) {
                     Grammar grammar2 = new Grammar("src/IO/G2.txt");
@@ -179,37 +179,44 @@ public class Main {
                         printMenuParser();
                         Scanner keyboard2 = new Scanner(System.in);
                         System.out.print("\nChoose an option (0-3): ");
-                        int option2 = keyboard2.nextInt();
 
-                        if (option2 == 0) {
-                            stop = true;
-                        } else if (option2 == 1) {
-                            emptyFile("src/IO/Out2.txt");
-                            MyScanner scanner2 = new MyScanner("src/IO/p1.txt");
-                            scanner2.scan();
-                            printToFile("src/IO/p1.txt".replace(".txt", "PIF.txt"), scanner2.getPif());
+                        String optionStr2 = keyboard.next();
+                        int option2;
+                        if (isInteger(optionStr2)) {
+                            option2 = Integer.parseInt(optionStr2);
 
-                            Stack<String> word2 = readFirstElemFromFile("src/IO/p1PIF.txt");
+                            if (option2 == 0) {
+                                stop = true;
+                            } else if (option2 == 1) {
+                                emptyFile("src/IO/Out2.txt");
+                                MyScanner scanner2 = new MyScanner("src/IO/p1.txt");
+                                scanner2.scan();
+                                printToFile("src/IO/p1.txt".replace(".txt", "PIF.txt"), scanner2.getPif());
 
-                            lrAlg2.parse(word2, parsingTable2, "src/IO/Out2.txt");
-                        } else if (option2 == 2) {
-                            emptyFile("src/IO/Out2.txt");
-                            MyScanner scanner3 = new MyScanner("src/IO/p2.txt");
-                            scanner3.scan();
-                            printToFile("src/IO/p2.txt".replace(".txt", "PIF.txt"), scanner3.getPif());
+                                Stack<String> word2 = readFirstElemFromFile("src/IO/p1PIF.txt");
 
-                            Stack<String> word3 = readFirstElemFromFile("src/IO/p2PIF.txt");
+                                lrAlg2.parseSequence(word2, parsingTable2, "src/IO/Out2.txt");
+                            } else if (option2 == 2) {
+                                emptyFile("src/IO/Out2.txt");
+                                MyScanner scanner3 = new MyScanner("src/IO/p2.txt");
+                                scanner3.scan();
+                                printToFile("src/IO/p2.txt".replace(".txt", "PIF.txt"), scanner3.getPif());
 
-                            lrAlg2.parse(word3, parsingTable2, "src/IO/Out2.txt");
-                        } else if (option2 == 3) {
-                            emptyFile("src/IO/Out2.txt");
-                            MyScanner scanner4 = new MyScanner("src/IO/p3.txt");
-                            scanner4.scan();
-                            printToFile("src/IO/p3.txt".replace(".txt", "PIF.txt"), scanner4.getPif());
+                                Stack<String> word3 = readFirstElemFromFile("src/IO/p2PIF.txt");
 
-                            Stack<String> word4 = readFirstElemFromFile("src/IO/p3PIF.txt");
+                                lrAlg2.parseSequence(word3, parsingTable2, "src/IO/Out2.txt");
+                            } else if (option2 == 3) {
+                                emptyFile("src/IO/Out2.txt");
+                                MyScanner scanner4 = new MyScanner("src/IO/p3.txt");
+                                scanner4.scan();
+                                printToFile("src/IO/p3.txt".replace(".txt", "PIF.txt"), scanner4.getPif());
 
-                            lrAlg2.parse(word4, parsingTable2, "src/IO/Out2.txt");
+                                Stack<String> word4 = readFirstElemFromFile("src/IO/p3PIF.txt");
+
+                                lrAlg2.parseSequence(word4, parsingTable2, "src/IO/Out2.txt");
+                            }
+                        } else {
+                            System.out.println("Invalid option!");
                         }
                     }
                 } else if (option == 9) {

@@ -7,8 +7,8 @@ public class ParsingTreeRow {
 
     private Integer index;
     private String info;
-    private ParsingTreeRow parent;
-    private ParsingTreeRow rightSibling;
+    private ParsingTreeRow parent; // the state from which the current state was derived by performing SHIFT/REDUCE
+    private ParsingTreeRow rightSibling; // right sibling of the current node
     private ParsingTreeRow leftChild;
     private Integer level;
 

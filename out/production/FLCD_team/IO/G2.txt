@@ -1,0 +1,27 @@
+program statementList compoundStmt modExpr statement simpleStmt structureStmt declaration primitiveDecl arrayDecl simpleType assignmentStmt ifStmt whileStmt readStmt printStmt term relation condition addExpr subtractExpr multiplyExpr divideExpr arExpr
+; { } + - * / ) ( read print IDENTIFIER CONST add sub mul mod div array [ ] = if else while int string char < <= == != => > ,
+program
+program ::= compoundStmt
+statementList ::= statement|statementList statement
+compoundStmt ::= { statementList }
+statement ::= simpleStmt ;|structureStmt
+simpleStmt ::= declaration|assignmentStmt|readStmt|printStmt
+structureStmt ::= compoundStmt|ifStmt|whileStmt
+declaration ::= primitiveDecl|arrayDecl
+primitiveDecl ::= simpleType IDENTIFIER
+arrayDecl ::= array simpleType IDENTIFIER [ ]
+simpleType ::= int|string|char
+assignmentStmt ::= IDENTIFIER = arExpr
+ifStmt ::= if ( condition ) { statement } else { statement }
+whileStmt ::= while ( condition ) compoundStmt
+readStmt ::= read ( IDENTIFIER )
+printStmt ::= print ( IDENTIFIER )|print ( CONST )
+term ::= IDENTIFIER|CONST
+relation ::= <|<=|==|!=|=>|>
+condition ::= arExpr relation arExpr
+addExpr ::= add ( arExpr , arExpr )
+subtractExpr ::= sub ( arExpr , arExpr )
+multiplyExpr ::= mul ( arExpr , arExpr )
+divideExpr ::= div ( arExpr , arExpr )
+modExpr ::= mod ( arExpr , arExpr )
+arExpr ::= addExpr|subtractExpr|multiplyExpr|divideExpr|modExpr|term

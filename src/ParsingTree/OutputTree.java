@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for building and printing the parsing tree
+ */
 @Data
 public class OutputTree {
 
@@ -32,7 +35,8 @@ public class OutputTree {
     /**
      * This method generates a parsing tree from a given sequence
      *
-     * @param inputSequence - the list which contains the production numbers (represents actually the output band from the parse algorithm)
+     * @param inputSequence - the list which contains the production numbers
+     *                      (represents actually the output band from the parseSequence algorithm)
      */
     public void generateTreeFromSequence(List<Integer> inputSequence) {
         int productionIndex = inputSequence.get(0);
@@ -43,7 +47,7 @@ public class OutputTree {
         this.root.setIndex(0);
         this.root.setLevel(0);
 
-        this.root.setLeftChild(buildRecursive(1, this.root, productionString.getSecond(), inputSequence));
+        this.root.setLeftChild(buildNodeRecursive(1, this.root, productionString.getSecond(), inputSequence));
     }
 
     /**
@@ -54,10 +58,10 @@ public class OutputTree {
      * @param level          - the level in the tree
      * @param parent         - the parent of the current node from the tree
      * @param currentContent - the current elements which compose the production (So if we had A -> a b, then the currentContent is [a, b])
-     * @param inputSequence  - the list with the production numbers from the output band of the parse algorithm
+     * @param inputSequence  - the list with the production numbers from the output band of the parseSequence algorithm
      * @return - the newly created node
      */
-    public ParsingTreeRow buildRecursive(int level, ParsingTreeRow parent, List<String> currentContent, List<Integer> inputSequence) {
+    public ParsingTreeRow buildNodeRecursive(int level, ParsingTreeRow parent, List<String> currentContent, List<Integer> inputSequence) {
         if (currentContent.isEmpty() || this.indexInInput >= inputSequence.size() + 1) {
             return null;
         }
@@ -88,7 +92,7 @@ public class OutputTree {
             newList.remove(0);
 
             // Then we call the recursion again in order to set the right sibling
-            node.setRightSibling(buildRecursive(level, parent, newList, inputSequence));
+            node.setRightSibling(buildNodeRecursive(level, parent, newList, inputSequence));
 
             return node;
         }
@@ -120,13 +124,13 @@ public class OutputTree {
             this.indexInInput++;
 
             // We call the recursion to set the left child
-            node.setLeftChild(buildRecursive(newLevel, node, productionString.getSecond(), inputSequence));
+            node.setLeftChild(buildNodeRecursive(newLevel, node, productionString.getSecond(), inputSequence));
 
             List<String> newList = new ArrayList<>(currentContent);
             newList.remove(0);
 
             // We call the recursion to set the right sibling
-            node.setRightSibling(buildRecursive(level, parent, newList, inputSequence));
+            node.setRightSibling(buildNodeRecursive(level, parent, newList, inputSequence));
 
             return node;
         } else {
