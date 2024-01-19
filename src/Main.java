@@ -177,7 +177,6 @@ public class Main {
                     boolean stop = false;
                     while (!stop) {
                         printMenuParser();
-                        Scanner keyboard2 = new Scanner(System.in);
                         System.out.print("\nChoose an option (0-3): ");
 
                         String optionStr2 = keyboard.next();
