@@ -10,78 +10,57 @@ Production strings:
 	printStmt -> [print, (, IDENTIFIER, )]
 	statementList -> [statementList, statement]
 	statement -> [simpleStmt, ;]
-	simpleStmt -> [printStmt]
-	printStmt -> [print, (, IDENTIFIER, )]
-	statementList -> [statementList, statement]
-	statement -> [simpleStmt, ;]
 	simpleStmt -> [assignmentStmt]
 	assignmentStmt -> [IDENTIFIER, =, arExpr]
-	arExpr -> [term]
-	term -> [CONST]
-	statementList -> [statementList, statement]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [declaration]
-	declaration -> [primitiveDecl]
-	primitiveDecl -> [simpleType, IDENTIFIER]
-	simpleType -> [string]
-	statementList -> [statementList, statement]
-	statement -> [structureStmt]
-	structureStmt -> [ifStmt]
-	ifStmt -> [if, (, condition, ), {, statement, }, else, {, statement, }]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [assignmentStmt]
-	assignmentStmt -> [IDENTIFIER, =, arExpr]
-	arExpr -> [term]
-	term -> [CONST]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [assignmentStmt]
-	assignmentStmt -> [IDENTIFIER, =, arExpr]
-	arExpr -> [term]
-	term -> [IDENTIFIER]
-	condition -> [arExpr, relation, arExpr]
-	arExpr -> [term]
-	term -> [IDENTIFIER]
-	relation -> [<]
 	arExpr -> [term]
 	term -> [IDENTIFIER]
 	statementList -> [statementList, statement]
 	statement -> [structureStmt]
-	structureStmt -> [ifStmt]
-	ifStmt -> [if, (, condition, ), {, statement, }, else, {, statement, }]
+	structureStmt -> [whileStmt]
+	whileStmt -> [while, (, condition, ), compoundStmt]
+	compoundStmt -> [{, statementList, }]
+	statementList -> [statementList, statement]
 	statement -> [simpleStmt, ;]
 	simpleStmt -> [assignmentStmt]
 	assignmentStmt -> [IDENTIFIER, =, arExpr]
 	arExpr -> [term]
 	term -> [IDENTIFIER]
+	statementList -> [statementList, statement]
 	statement -> [simpleStmt, ;]
 	simpleStmt -> [assignmentStmt]
 	assignmentStmt -> [IDENTIFIER, =, arExpr]
+	arExpr -> [term]
+	term -> [IDENTIFIER]
+	statementList -> [statement]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [assignmentStmt]
+	assignmentStmt -> [IDENTIFIER, =, arExpr]
+	arExpr -> [modExpr]
+	modExpr -> [mod, (, arExpr, ,, arExpr, )]
+	arExpr -> [term]
+	term -> [IDENTIFIER]
 	arExpr -> [term]
 	term -> [IDENTIFIER]
 	condition -> [arExpr, relation, arExpr]
 	arExpr -> [term]
-	term -> [IDENTIFIER]
-	relation -> [<]
+	term -> [CONST]
+	relation -> [!=]
 	arExpr -> [term]
 	term -> [IDENTIFIER]
+	statementList -> [statementList, statement]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [readStmt]
+	readStmt -> [read, (, IDENTIFIER, )]
+	statementList -> [statementList, statement]
+	statement -> [simpleStmt, ;]
+	simpleStmt -> [readStmt]
+	readStmt -> [read, (, IDENTIFIER, )]
 	statementList -> [statementList, statement]
 	statement -> [simpleStmt, ;]
 	simpleStmt -> [declaration]
 	declaration -> [primitiveDecl]
 	primitiveDecl -> [simpleType, IDENTIFIER]
 	simpleType -> [int]
-	statementList -> [statementList, statement]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [readStmt]
-	readStmt -> [read, (, IDENTIFIER, )]
-	statementList -> [statementList, statement]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [readStmt]
-	readStmt -> [read, (, IDENTIFIER, )]
-	statementList -> [statementList, statement]
-	statement -> [simpleStmt, ;]
-	simpleStmt -> [readStmt]
-	readStmt -> [read, (, IDENTIFIER, )]
 	statementList -> [statementList, statement]
 	statement -> [simpleStmt, ;]
 	simpleStmt -> [declaration]
@@ -101,7 +80,7 @@ Production strings:
 	primitiveDecl -> [simpleType, IDENTIFIER]
 	simpleType -> [int]
 
-Productions numbers: [0, 3, 2, 4, 9, 24, 2, 4, 9, 24, 2, 4, 7, 20, 45, 27, 2, 4, 6, 13, 15, 18, 2, 5, 11, 21, 4, 7, 20, 45, 27, 4, 7, 20, 45, 26, 34, 45, 26, 28, 45, 26, 2, 5, 11, 21, 4, 7, 20, 45, 26, 4, 7, 20, 45, 26, 34, 45, 26, 28, 45, 26, 2, 4, 6, 13, 15, 17, 2, 4, 8, 23, 2, 4, 8, 23, 2, 4, 8, 23, 2, 4, 6, 13, 15, 17, 2, 4, 6, 13, 15, 17, 1, 4, 6, 13, 15, 17]
+Productions numbers: [0, 3, 2, 4, 9, 24, 2, 4, 7, 20, 45, 26, 2, 5, 12, 22, 3, 2, 4, 7, 20, 45, 26, 2, 4, 7, 20, 45, 26, 1, 4, 7, 20, 44, 39, 45, 26, 45, 26, 34, 45, 27, 31, 45, 26, 2, 4, 8, 23, 2, 4, 8, 23, 2, 4, 6, 13, 15, 17, 2, 4, 6, 13, 15, 17, 2, 4, 6, 13, 15, 17, 1, 4, 6, 13, 15, 17]
 
 The output tree: 
 	ParsingTreeRow {
@@ -132,12 +111,12 @@ The output tree:
 				index = 3, 
 				info = statementList, 
 				leftChild = 4, 
-				rightChild = 181, 
+				rightChild = 134, 
 				parent = 1, 
 				level = 2
 		}
 	ParsingTreeRow {
-				index = 181, 
+				index = 134, 
 				info = }, 
 				leftChild = -1, 
 				rightChild = -1, 
@@ -180,14 +159,14 @@ The output tree:
 				index = 13, 
 				info = statementList, 
 				leftChild = 14, 
-				rightChild = 21, 
+				rightChild = 22, 
 				parent = 12, 
 				level = 4
 		}
 	ParsingTreeRow {
-				index = 21, 
+				index = 22, 
 				info = statement, 
-				leftChild = 22, 
+				leftChild = 23, 
 				rightChild = -1, 
 				parent = 12, 
 				level = 4
@@ -204,12 +183,12 @@ The output tree:
 				index = 14, 
 				info = simpleStmt, 
 				leftChild = 15, 
-				rightChild = 20, 
+				rightChild = 21, 
 				parent = 13, 
 				level = 5
 		}
 	ParsingTreeRow {
-				index = 20, 
+				index = 21, 
 				info = ;, 
 				leftChild = -1, 
 				rightChild = -1, 
@@ -217,19 +196,19 @@ The output tree:
 				level = 5
 		}
 	ParsingTreeRow {
-				index = 22, 
+				index = 23, 
 				info = statementList, 
-				leftChild = 23, 
-				rightChild = 31, 
-				parent = 21, 
+				leftChild = 24, 
+				rightChild = 80, 
+				parent = 22, 
 				level = 5
 		}
 	ParsingTreeRow {
-				index = 31, 
+				index = 80, 
 				info = statement, 
-				leftChild = 32, 
+				leftChild = 81, 
 				rightChild = -1, 
-				parent = 21, 
+				parent = 22, 
 				level = 5
 		}
 	ParsingTreeRow {
@@ -266,47 +245,39 @@ The output tree:
 		}
 	ParsingTreeRow {
 				index = 15, 
-				info = printStmt, 
+				info = assignmentStmt, 
 				leftChild = 16, 
 				rightChild = -1, 
 				parent = 14, 
 				level = 6
 		}
 	ParsingTreeRow {
-				index = 23, 
-				info = simpleStmt, 
-				leftChild = 24, 
-				rightChild = 30, 
-				parent = 22, 
-				level = 6
-		}
-	ParsingTreeRow {
-				index = 30, 
-				info = ;, 
-				leftChild = -1, 
+				index = 24, 
+				info = structureStmt, 
+				leftChild = 25, 
 				rightChild = -1, 
-				parent = 22, 
+				parent = 23, 
 				level = 6
 		}
 	ParsingTreeRow {
-				index = 32, 
+				index = 81, 
 				info = statementList, 
-				leftChild = 33, 
-				rightChild = 40, 
-				parent = 31, 
+				leftChild = 82, 
+				rightChild = 89, 
+				parent = 80, 
 				level = 6
 		}
 	ParsingTreeRow {
-				index = 40, 
+				index = 89, 
 				info = statement, 
-				leftChild = 41, 
+				leftChild = 90, 
 				rightChild = -1, 
-				parent = 31, 
+				parent = 80, 
 				level = 6
 		}
 	ParsingTreeRow {
 				index = 16, 
-				info = print, 
+				info = IDENTIFIER, 
 				leftChild = -1, 
 				rightChild = 17, 
 				parent = 15, 
@@ -314,7 +285,7 @@ The output tree:
 		}
 	ParsingTreeRow {
 				index = 17, 
-				info = (, 
+				info = =, 
 				leftChild = -1, 
 				rightChild = 18, 
 				parent = 15, 
@@ -322,1241 +293,873 @@ The output tree:
 		}
 	ParsingTreeRow {
 				index = 18, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 19, 
+				info = arExpr, 
+				leftChild = 19, 
+				rightChild = -1, 
 				parent = 15, 
+				level = 7
+		}
+	ParsingTreeRow {
+				index = 25, 
+				info = whileStmt, 
+				leftChild = 26, 
+				rightChild = -1, 
+				parent = 24, 
+				level = 7
+		}
+	ParsingTreeRow {
+				index = 82, 
+				info = simpleStmt, 
+				leftChild = 83, 
+				rightChild = 88, 
+				parent = 81, 
+				level = 7
+		}
+	ParsingTreeRow {
+				index = 88, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 81, 
+				level = 7
+		}
+	ParsingTreeRow {
+				index = 90, 
+				info = statementList, 
+				leftChild = 91, 
+				rightChild = 98, 
+				parent = 89, 
+				level = 7
+		}
+	ParsingTreeRow {
+				index = 98, 
+				info = statement, 
+				leftChild = 99, 
+				rightChild = -1, 
+				parent = 89, 
 				level = 7
 		}
 	ParsingTreeRow {
 				index = 19, 
+				info = term, 
+				leftChild = 20, 
+				rightChild = -1, 
+				parent = 18, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 26, 
+				info = while, 
+				leftChild = -1, 
+				rightChild = 27, 
+				parent = 25, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 27, 
+				info = (, 
+				leftChild = -1, 
+				rightChild = 28, 
+				parent = 25, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 28, 
+				info = condition, 
+				leftChild = 29, 
+				rightChild = 70, 
+				parent = 25, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 70, 
+				info = ), 
+				leftChild = -1, 
+				rightChild = 71, 
+				parent = 25, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 71, 
+				info = compoundStmt, 
+				leftChild = 72, 
+				rightChild = -1, 
+				parent = 25, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 83, 
+				info = readStmt, 
+				leftChild = 84, 
+				rightChild = -1, 
+				parent = 82, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 91, 
+				info = simpleStmt, 
+				leftChild = 92, 
+				rightChild = 97, 
+				parent = 90, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 97, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 90, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 99, 
+				info = statementList, 
+				leftChild = 100, 
+				rightChild = 107, 
+				parent = 98, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 107, 
+				info = statement, 
+				leftChild = 108, 
+				rightChild = -1, 
+				parent = 98, 
+				level = 8
+		}
+	ParsingTreeRow {
+				index = 20, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 19, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 29, 
+				info = {, 
+				leftChild = -1, 
+				rightChild = 30, 
+				parent = 28, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 30, 
+				info = statementList, 
+				leftChild = 31, 
+				rightChild = 69, 
+				parent = 28, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 69, 
+				info = }, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 28, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 72, 
+				info = arExpr, 
+				leftChild = 73, 
+				rightChild = 75, 
+				parent = 71, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 75, 
+				info = relation, 
+				leftChild = 76, 
+				rightChild = 77, 
+				parent = 71, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 77, 
+				info = arExpr, 
+				leftChild = 78, 
+				rightChild = -1, 
+				parent = 71, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 84, 
+				info = read, 
+				leftChild = -1, 
+				rightChild = 85, 
+				parent = 83, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 85, 
+				info = (, 
+				leftChild = -1, 
+				rightChild = 86, 
+				parent = 83, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 86, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = 87, 
+				parent = 83, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 87, 
 				info = ), 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 15, 
-				level = 7
+				parent = 83, 
+				level = 9
 		}
 	ParsingTreeRow {
-				index = 24, 
-				info = assignmentStmt, 
-				leftChild = 25, 
+				index = 92, 
+				info = readStmt, 
+				leftChild = 93, 
 				rightChild = -1, 
-				parent = 23, 
-				level = 7
+				parent = 91, 
+				level = 9
 		}
 	ParsingTreeRow {
-				index = 33, 
+				index = 100, 
 				info = simpleStmt, 
-				leftChild = 34, 
+				leftChild = 101, 
+				rightChild = 106, 
+				parent = 99, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 106, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 99, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 108, 
+				info = statementList, 
+				leftChild = 109, 
+				rightChild = 116, 
+				parent = 107, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 116, 
+				info = statement, 
+				leftChild = 117, 
+				rightChild = -1, 
+				parent = 107, 
+				level = 9
+		}
+	ParsingTreeRow {
+				index = 31, 
+				info = statementList, 
+				leftChild = 32, 
+				rightChild = 40, 
+				parent = 30, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 40, 
+				info = statement, 
+				leftChild = 41, 
+				rightChild = -1, 
+				parent = 30, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 73, 
+				info = term, 
+				leftChild = 74, 
+				rightChild = -1, 
+				parent = 72, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 76, 
+				info = !=, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 75, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 78, 
+				info = term, 
+				leftChild = 79, 
+				rightChild = -1, 
+				parent = 77, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 93, 
+				info = read, 
+				leftChild = -1, 
+				rightChild = 94, 
+				parent = 92, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 94, 
+				info = (, 
+				leftChild = -1, 
+				rightChild = 95, 
+				parent = 92, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 95, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = 96, 
+				parent = 92, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 96, 
+				info = ), 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 92, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 101, 
+				info = declaration, 
+				leftChild = 102, 
+				rightChild = -1, 
+				parent = 100, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 109, 
+				info = simpleStmt, 
+				leftChild = 110, 
+				rightChild = 115, 
+				parent = 108, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 115, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 108, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 117, 
+				info = statementList, 
+				leftChild = 118, 
+				rightChild = 125, 
+				parent = 116, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 125, 
+				info = statement, 
+				leftChild = 126, 
+				rightChild = -1, 
+				parent = 116, 
+				level = 10
+		}
+	ParsingTreeRow {
+				index = 32, 
+				info = simpleStmt, 
+				leftChild = 33, 
 				rightChild = 39, 
-				parent = 32, 
-				level = 7
+				parent = 31, 
+				level = 11
 		}
 	ParsingTreeRow {
 				index = 39, 
 				info = ;, 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 32, 
-				level = 7
+				parent = 31, 
+				level = 11
 		}
 	ParsingTreeRow {
 				index = 41, 
 				info = statementList, 
 				leftChild = 42, 
-				rightChild = 79, 
+				rightChild = 50, 
 				parent = 40, 
-				level = 7
+				level = 11
 		}
 	ParsingTreeRow {
-				index = 79, 
+				index = 50, 
 				info = statement, 
-				leftChild = 80, 
+				leftChild = 51, 
 				rightChild = -1, 
 				parent = 40, 
-				level = 7
+				level = 11
 		}
 	ParsingTreeRow {
-				index = 25, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 26, 
-				parent = 24, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 26, 
-				info = =, 
-				leftChild = -1, 
-				rightChild = 27, 
-				parent = 24, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 27, 
-				info = arExpr, 
-				leftChild = 28, 
-				rightChild = -1, 
-				parent = 24, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 34, 
-				info = declaration, 
-				leftChild = 35, 
-				rightChild = -1, 
-				parent = 33, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 42, 
-				info = structureStmt, 
-				leftChild = 43, 
-				rightChild = -1, 
-				parent = 41, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 80, 
-				info = statementList, 
-				leftChild = 81, 
-				rightChild = 118, 
-				parent = 79, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 118, 
-				info = statement, 
-				leftChild = 119, 
-				rightChild = -1, 
-				parent = 79, 
-				level = 8
-		}
-	ParsingTreeRow {
-				index = 28, 
-				info = term, 
-				leftChild = 29, 
-				rightChild = -1, 
-				parent = 27, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 35, 
-				info = primitiveDecl, 
-				leftChild = 36, 
-				rightChild = -1, 
-				parent = 34, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 43, 
-				info = ifStmt, 
-				leftChild = 44, 
-				rightChild = -1, 
-				parent = 42, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 81, 
-				info = structureStmt, 
-				leftChild = 82, 
-				rightChild = -1, 
-				parent = 80, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 119, 
-				info = statementList, 
-				leftChild = 120, 
-				rightChild = 127, 
-				parent = 118, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 127, 
-				info = statement, 
-				leftChild = 128, 
-				rightChild = -1, 
-				parent = 118, 
-				level = 9
-		}
-	ParsingTreeRow {
-				index = 29, 
+				index = 74, 
 				info = CONST, 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 28, 
-				level = 10
+				parent = 73, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 79, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 78, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 102, 
+				info = primitiveDecl, 
+				leftChild = 103, 
+				rightChild = -1, 
+				parent = 101, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 110, 
+				info = declaration, 
+				leftChild = 111, 
+				rightChild = -1, 
+				parent = 109, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 118, 
+				info = simpleStmt, 
+				leftChild = 119, 
+				rightChild = 124, 
+				parent = 117, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 124, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 117, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 126, 
+				info = statement, 
+				leftChild = 127, 
+				rightChild = -1, 
+				parent = 125, 
+				level = 11
+		}
+	ParsingTreeRow {
+				index = 33, 
+				info = assignmentStmt, 
+				leftChild = 34, 
+				rightChild = -1, 
+				parent = 32, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 42, 
+				info = simpleStmt, 
+				leftChild = 43, 
+				rightChild = 49, 
+				parent = 41, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 49, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 41, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 51, 
+				info = statement, 
+				leftChild = 52, 
+				rightChild = -1, 
+				parent = 50, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 103, 
+				info = simpleType, 
+				leftChild = 104, 
+				rightChild = 105, 
+				parent = 102, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 105, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 102, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 111, 
+				info = primitiveDecl, 
+				leftChild = 112, 
+				rightChild = -1, 
+				parent = 110, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 119, 
+				info = declaration, 
+				leftChild = 120, 
+				rightChild = -1, 
+				parent = 118, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 127, 
+				info = simpleStmt, 
+				leftChild = 128, 
+				rightChild = 133, 
+				parent = 126, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 133, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 126, 
+				level = 12
+		}
+	ParsingTreeRow {
+				index = 34, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = 35, 
+				parent = 33, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 35, 
+				info = =, 
+				leftChild = -1, 
+				rightChild = 36, 
+				parent = 33, 
+				level = 13
 		}
 	ParsingTreeRow {
 				index = 36, 
-				info = simpleType, 
+				info = arExpr, 
 				leftChild = 37, 
-				rightChild = 38, 
-				parent = 35, 
-				level = 10
+				rightChild = -1, 
+				parent = 33, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 43, 
+				info = assignmentStmt, 
+				leftChild = 44, 
+				rightChild = -1, 
+				parent = 42, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 52, 
+				info = simpleStmt, 
+				leftChild = 53, 
+				rightChild = 68, 
+				parent = 51, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 68, 
+				info = ;, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 51, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 104, 
+				info = int, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 103, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 112, 
+				info = simpleType, 
+				leftChild = 113, 
+				rightChild = 114, 
+				parent = 111, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 114, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 111, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 120, 
+				info = primitiveDecl, 
+				leftChild = 121, 
+				rightChild = -1, 
+				parent = 119, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 128, 
+				info = declaration, 
+				leftChild = 129, 
+				rightChild = -1, 
+				parent = 127, 
+				level = 13
+		}
+	ParsingTreeRow {
+				index = 37, 
+				info = term, 
+				leftChild = 38, 
+				rightChild = -1, 
+				parent = 36, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 44, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = 45, 
+				parent = 43, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 45, 
+				info = =, 
+				leftChild = -1, 
+				rightChild = 46, 
+				parent = 43, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 46, 
+				info = arExpr, 
+				leftChild = 47, 
+				rightChild = -1, 
+				parent = 43, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 53, 
+				info = assignmentStmt, 
+				leftChild = 54, 
+				rightChild = -1, 
+				parent = 52, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 113, 
+				info = int, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 112, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 121, 
+				info = simpleType, 
+				leftChild = 122, 
+				rightChild = 123, 
+				parent = 120, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 123, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 120, 
+				level = 14
+		}
+	ParsingTreeRow {
+				index = 129, 
+				info = primitiveDecl, 
+				leftChild = 130, 
+				rightChild = -1, 
+				parent = 128, 
+				level = 14
 		}
 	ParsingTreeRow {
 				index = 38, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 35, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 44, 
-				info = if, 
-				leftChild = -1, 
-				rightChild = 45, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 45, 
-				info = (, 
-				leftChild = -1, 
-				rightChild = 46, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 46, 
-				info = condition, 
-				leftChild = 47, 
-				rightChild = 55, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 55, 
-				info = ), 
-				leftChild = -1, 
-				rightChild = 56, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 56, 
-				info = {, 
-				leftChild = -1, 
-				rightChild = 57, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 57, 
-				info = statement, 
-				leftChild = 58, 
-				rightChild = 66, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 66, 
-				info = }, 
-				leftChild = -1, 
-				rightChild = 67, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 67, 
-				info = else, 
-				leftChild = -1, 
-				rightChild = 68, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 68, 
-				info = {, 
-				leftChild = -1, 
-				rightChild = 69, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 69, 
-				info = statement, 
-				leftChild = 70, 
-				rightChild = 78, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 78, 
-				info = }, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 43, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 82, 
-				info = ifStmt, 
-				leftChild = 83, 
-				rightChild = -1, 
-				parent = 81, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 120, 
-				info = simpleStmt, 
-				leftChild = 121, 
-				rightChild = 126, 
-				parent = 119, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 126, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 119, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 128, 
-				info = statementList, 
-				leftChild = 129, 
-				rightChild = 136, 
-				parent = 127, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 136, 
-				info = statement, 
-				leftChild = 137, 
-				rightChild = -1, 
-				parent = 127, 
-				level = 10
-		}
-	ParsingTreeRow {
-				index = 37, 
-				info = string, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 36, 
-				level = 11
+				parent = 37, 
+				level = 15
 		}
 	ParsingTreeRow {
 				index = 47, 
-				info = simpleStmt, 
+				info = term, 
 				leftChild = 48, 
-				rightChild = 54, 
+				rightChild = -1, 
 				parent = 46, 
-				level = 11
+				level = 15
 		}
 	ParsingTreeRow {
 				index = 54, 
-				info = ;, 
+				info = IDENTIFIER, 
 				leftChild = -1, 
-				rightChild = -1, 
-				parent = 46, 
-				level = 11
+				rightChild = 55, 
+				parent = 53, 
+				level = 15
 		}
 	ParsingTreeRow {
-				index = 58, 
-				info = simpleStmt, 
-				leftChild = 59, 
-				rightChild = 65, 
-				parent = 57, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 65, 
-				info = ;, 
+				index = 55, 
+				info = =, 
 				leftChild = -1, 
-				rightChild = -1, 
-				parent = 57, 
-				level = 11
+				rightChild = 56, 
+				parent = 53, 
+				level = 15
 		}
 	ParsingTreeRow {
-				index = 70, 
+				index = 56, 
 				info = arExpr, 
-				leftChild = 71, 
-				rightChild = 73, 
-				parent = 69, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 73, 
-				info = relation, 
-				leftChild = 74, 
-				rightChild = 75, 
-				parent = 69, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 75, 
-				info = arExpr, 
-				leftChild = 76, 
+				leftChild = 57, 
 				rightChild = -1, 
-				parent = 69, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 83, 
-				info = if, 
-				leftChild = -1, 
-				rightChild = 84, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 84, 
-				info = (, 
-				leftChild = -1, 
-				rightChild = 85, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 85, 
-				info = condition, 
-				leftChild = 86, 
-				rightChild = 94, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 94, 
-				info = ), 
-				leftChild = -1, 
-				rightChild = 95, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 95, 
-				info = {, 
-				leftChild = -1, 
-				rightChild = 96, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 96, 
-				info = statement, 
-				leftChild = 97, 
-				rightChild = 105, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 105, 
-				info = }, 
-				leftChild = -1, 
-				rightChild = 106, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 106, 
-				info = else, 
-				leftChild = -1, 
-				rightChild = 107, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 107, 
-				info = {, 
-				leftChild = -1, 
-				rightChild = 108, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 108, 
-				info = statement, 
-				leftChild = 109, 
-				rightChild = 117, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 117, 
-				info = }, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 82, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 121, 
-				info = declaration, 
-				leftChild = 122, 
-				rightChild = -1, 
-				parent = 120, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 129, 
-				info = simpleStmt, 
-				leftChild = 130, 
-				rightChild = 135, 
-				parent = 128, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 135, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 128, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 137, 
-				info = statementList, 
-				leftChild = 138, 
-				rightChild = 145, 
-				parent = 136, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 145, 
-				info = statement, 
-				leftChild = 146, 
-				rightChild = -1, 
-				parent = 136, 
-				level = 11
-		}
-	ParsingTreeRow {
-				index = 48, 
-				info = assignmentStmt, 
-				leftChild = 49, 
-				rightChild = -1, 
-				parent = 47, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 59, 
-				info = assignmentStmt, 
-				leftChild = 60, 
-				rightChild = -1, 
-				parent = 58, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 71, 
-				info = term, 
-				leftChild = 72, 
-				rightChild = -1, 
-				parent = 70, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 74, 
-				info = <, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 73, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 76, 
-				info = term, 
-				leftChild = 77, 
-				rightChild = -1, 
-				parent = 75, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 86, 
-				info = simpleStmt, 
-				leftChild = 87, 
-				rightChild = 93, 
-				parent = 85, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 93, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 85, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 97, 
-				info = simpleStmt, 
-				leftChild = 98, 
-				rightChild = 104, 
-				parent = 96, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 104, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 96, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 109, 
-				info = arExpr, 
-				leftChild = 110, 
-				rightChild = 112, 
-				parent = 108, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 112, 
-				info = relation, 
-				leftChild = 113, 
-				rightChild = 114, 
-				parent = 108, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 114, 
-				info = arExpr, 
-				leftChild = 115, 
-				rightChild = -1, 
-				parent = 108, 
-				level = 12
+				parent = 53, 
+				level = 15
 		}
 	ParsingTreeRow {
 				index = 122, 
-				info = primitiveDecl, 
-				leftChild = 123, 
+				info = int, 
+				leftChild = -1, 
 				rightChild = -1, 
 				parent = 121, 
-				level = 12
+				level = 15
 		}
 	ParsingTreeRow {
 				index = 130, 
-				info = readStmt, 
-				leftChild = 131, 
-				rightChild = -1, 
-				parent = 129, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 138, 
-				info = simpleStmt, 
-				leftChild = 139, 
-				rightChild = 144, 
-				parent = 137, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 144, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 137, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 146, 
-				info = statementList, 
-				leftChild = 147, 
-				rightChild = 154, 
-				parent = 145, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 154, 
-				info = statement, 
-				leftChild = 155, 
-				rightChild = -1, 
-				parent = 145, 
-				level = 12
-		}
-	ParsingTreeRow {
-				index = 49, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 50, 
-				parent = 48, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 50, 
-				info = =, 
-				leftChild = -1, 
-				rightChild = 51, 
-				parent = 48, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 51, 
-				info = arExpr, 
-				leftChild = 52, 
-				rightChild = -1, 
-				parent = 48, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 60, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 61, 
-				parent = 59, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 61, 
-				info = =, 
-				leftChild = -1, 
-				rightChild = 62, 
-				parent = 59, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 62, 
-				info = arExpr, 
-				leftChild = 63, 
-				rightChild = -1, 
-				parent = 59, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 72, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 71, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 77, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 76, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 87, 
-				info = assignmentStmt, 
-				leftChild = 88, 
-				rightChild = -1, 
-				parent = 86, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 98, 
-				info = assignmentStmt, 
-				leftChild = 99, 
-				rightChild = -1, 
-				parent = 97, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 110, 
-				info = term, 
-				leftChild = 111, 
-				rightChild = -1, 
-				parent = 109, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 113, 
-				info = <, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 112, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 115, 
-				info = term, 
-				leftChild = 116, 
-				rightChild = -1, 
-				parent = 114, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 123, 
 				info = simpleType, 
-				leftChild = 124, 
-				rightChild = 125, 
-				parent = 122, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 125, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 122, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 131, 
-				info = read, 
-				leftChild = -1, 
+				leftChild = 131, 
 				rightChild = 132, 
-				parent = 130, 
-				level = 13
+				parent = 129, 
+				level = 15
 		}
 	ParsingTreeRow {
 				index = 132, 
-				info = (, 
-				leftChild = -1, 
-				rightChild = 133, 
-				parent = 130, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 133, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
-				rightChild = 134, 
-				parent = 130, 
-				level = 13
+				rightChild = -1, 
+				parent = 129, 
+				level = 15
 		}
 	ParsingTreeRow {
-				index = 134, 
-				info = ), 
+				index = 48, 
+				info = IDENTIFIER, 
+				leftChild = -1, 
+				rightChild = -1, 
+				parent = 47, 
+				level = 16
+		}
+	ParsingTreeRow {
+				index = 57, 
+				info = modExpr, 
+				leftChild = 58, 
+				rightChild = -1, 
+				parent = 56, 
+				level = 16
+		}
+	ParsingTreeRow {
+				index = 131, 
+				info = int, 
 				leftChild = -1, 
 				rightChild = -1, 
 				parent = 130, 
-				level = 13
+				level = 16
 		}
 	ParsingTreeRow {
-				index = 139, 
-				info = readStmt, 
-				leftChild = 140, 
-				rightChild = -1, 
-				parent = 138, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 147, 
-				info = simpleStmt, 
-				leftChild = 148, 
-				rightChild = 153, 
-				parent = 146, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 153, 
-				info = ;, 
+				index = 58, 
+				info = mod, 
 				leftChild = -1, 
-				rightChild = -1, 
-				parent = 146, 
-				level = 13
+				rightChild = 59, 
+				parent = 57, 
+				level = 17
 		}
 	ParsingTreeRow {
-				index = 155, 
-				info = statementList, 
-				leftChild = 156, 
-				rightChild = 163, 
-				parent = 154, 
-				level = 13
+				index = 59, 
+				info = (, 
+				leftChild = -1, 
+				rightChild = 60, 
+				parent = 57, 
+				level = 17
 		}
 	ParsingTreeRow {
-				index = 163, 
-				info = statement, 
-				leftChild = 164, 
-				rightChild = -1, 
-				parent = 154, 
-				level = 13
-		}
-	ParsingTreeRow {
-				index = 52, 
-				info = term, 
-				leftChild = 53, 
-				rightChild = -1, 
-				parent = 51, 
-				level = 14
+				index = 60, 
+				info = arExpr, 
+				leftChild = 61, 
+				rightChild = 63, 
+				parent = 57, 
+				level = 17
 		}
 	ParsingTreeRow {
 				index = 63, 
-				info = term, 
-				leftChild = 64, 
-				rightChild = -1, 
-				parent = 62, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 88, 
-				info = IDENTIFIER, 
+				info = ,, 
 				leftChild = -1, 
-				rightChild = 89, 
-				parent = 87, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 89, 
-				info = =, 
-				leftChild = -1, 
-				rightChild = 90, 
-				parent = 87, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 90, 
-				info = arExpr, 
-				leftChild = 91, 
-				rightChild = -1, 
-				parent = 87, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 99, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 100, 
-				parent = 98, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 100, 
-				info = =, 
-				leftChild = -1, 
-				rightChild = 101, 
-				parent = 98, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 101, 
-				info = arExpr, 
-				leftChild = 102, 
-				rightChild = -1, 
-				parent = 98, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 111, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 110, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 116, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 115, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 124, 
-				info = int, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 123, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 140, 
-				info = read, 
-				leftChild = -1, 
-				rightChild = 141, 
-				parent = 139, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 141, 
-				info = (, 
-				leftChild = -1, 
-				rightChild = 142, 
-				parent = 139, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 142, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 143, 
-				parent = 139, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 143, 
-				info = ), 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 139, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 148, 
-				info = readStmt, 
-				leftChild = 149, 
-				rightChild = -1, 
-				parent = 147, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 156, 
-				info = simpleStmt, 
-				leftChild = 157, 
-				rightChild = 162, 
-				parent = 155, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 162, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 155, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 164, 
-				info = statementList, 
-				leftChild = 165, 
-				rightChild = 172, 
-				parent = 163, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 172, 
-				info = statement, 
-				leftChild = 173, 
-				rightChild = -1, 
-				parent = 163, 
-				level = 14
-		}
-	ParsingTreeRow {
-				index = 53, 
-				info = CONST, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 52, 
-				level = 15
+				rightChild = 64, 
+				parent = 57, 
+				level = 17
 		}
 	ParsingTreeRow {
 				index = 64, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 63, 
-				level = 15
+				info = arExpr, 
+				leftChild = 65, 
+				rightChild = 67, 
+				parent = 57, 
+				level = 17
 		}
 	ParsingTreeRow {
-				index = 91, 
-				info = term, 
-				leftChild = 92, 
-				rightChild = -1, 
-				parent = 90, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 102, 
-				info = term, 
-				leftChild = 103, 
-				rightChild = -1, 
-				parent = 101, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 149, 
-				info = read, 
-				leftChild = -1, 
-				rightChild = 150, 
-				parent = 148, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 150, 
-				info = (, 
-				leftChild = -1, 
-				rightChild = 151, 
-				parent = 148, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 151, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = 152, 
-				parent = 148, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 152, 
+				index = 67, 
 				info = ), 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 148, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 157, 
-				info = declaration, 
-				leftChild = 158, 
-				rightChild = -1, 
-				parent = 156, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 165, 
-				info = simpleStmt, 
-				leftChild = 166, 
-				rightChild = 171, 
-				parent = 164, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 171, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 164, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 173, 
-				info = statement, 
-				leftChild = 174, 
-				rightChild = -1, 
-				parent = 172, 
-				level = 15
-		}
-	ParsingTreeRow {
-				index = 92, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 91, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 103, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 102, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 158, 
-				info = primitiveDecl, 
-				leftChild = 159, 
-				rightChild = -1, 
-				parent = 157, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 166, 
-				info = declaration, 
-				leftChild = 167, 
-				rightChild = -1, 
-				parent = 165, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 174, 
-				info = simpleStmt, 
-				leftChild = 175, 
-				rightChild = 180, 
-				parent = 173, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 180, 
-				info = ;, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 173, 
-				level = 16
-		}
-	ParsingTreeRow {
-				index = 159, 
-				info = simpleType, 
-				leftChild = 160, 
-				rightChild = 161, 
-				parent = 158, 
+				parent = 57, 
 				level = 17
 		}
 	ParsingTreeRow {
-				index = 161, 
+				index = 61, 
+				info = term, 
+				leftChild = 62, 
+				rightChild = -1, 
+				parent = 60, 
+				level = 18
+		}
+	ParsingTreeRow {
+				index = 65, 
+				info = term, 
+				leftChild = 66, 
+				rightChild = -1, 
+				parent = 64, 
+				level = 18
+		}
+	ParsingTreeRow {
+				index = 62, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 158, 
-				level = 17
-		}
-	ParsingTreeRow {
-				index = 167, 
-				info = primitiveDecl, 
-				leftChild = 168, 
-				rightChild = -1, 
-				parent = 166, 
-				level = 17
-		}
-	ParsingTreeRow {
-				index = 175, 
-				info = declaration, 
-				leftChild = 176, 
-				rightChild = -1, 
-				parent = 174, 
-				level = 17
-		}
-	ParsingTreeRow {
-				index = 160, 
-				info = int, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 159, 
-				level = 18
-		}
-	ParsingTreeRow {
-				index = 168, 
-				info = simpleType, 
-				leftChild = 169, 
-				rightChild = 170, 
-				parent = 167, 
-				level = 18
-		}
-	ParsingTreeRow {
-				index = 170, 
-				info = IDENTIFIER, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 167, 
-				level = 18
-		}
-	ParsingTreeRow {
-				index = 176, 
-				info = primitiveDecl, 
-				leftChild = 177, 
-				rightChild = -1, 
-				parent = 175, 
-				level = 18
-		}
-	ParsingTreeRow {
-				index = 169, 
-				info = int, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 168, 
+				parent = 61, 
 				level = 19
 		}
 	ParsingTreeRow {
-				index = 177, 
-				info = simpleType, 
-				leftChild = 178, 
-				rightChild = 179, 
-				parent = 176, 
-				level = 19
-		}
-	ParsingTreeRow {
-				index = 179, 
+				index = 66, 
 				info = IDENTIFIER, 
 				leftChild = -1, 
 				rightChild = -1, 
-				parent = 176, 
+				parent = 65, 
 				level = 19
-		}
-	ParsingTreeRow {
-				index = 178, 
-				info = int, 
-				leftChild = -1, 
-				rightChild = -1, 
-				parent = 177, 
-				level = 20
 		}

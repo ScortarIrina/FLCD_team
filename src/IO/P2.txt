@@ -2,6 +2,7 @@
     int a;
     int b;
     int c;
+    int gcd;
 
     read ( a );
     read ( b );
@@ -12,5 +13,6 @@
         b = c;
     }
 
-    print ( a );
+    gcd = a;
+    print ( gcd );
 }
