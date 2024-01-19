@@ -10,7 +10,10 @@
         read ( x );
         sum = add ( sum , x );
         n = sub ( n , 1 );
-}
+    }
 
-print ( sum );
+    string text;
+    text = "The sum is ";
+    print ( text );
+    print ( sum );
 }
